@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expense Tracker</title>
+  <link rel="stylesheet" href="stylesheets/style.css" />
+</head>
+<body>
+
+  <header>
+    <h1>Expense Tracker</h1>
+  </header>
+
+  <main>
+    <!-- Balance Summary -->
+    <section id="summary">
+      <h2>Balance: <span id="balance">£0.00</span></h2>
+      <div class="totals">
+        <p>Income: <span id="income">£0.00</span></p>
+        <p>Expenses: <span id="expenses">£0.00</span></p>
+      </div>
+    </section>
+
+    <!-- Transaction Form -->
+    <section id="transaction-form">
+      <h3>Add Transaction</h3>
+      <form id="form">
+        <input type="text" id="description" placeholder="Description" required />
+        <input type="number" id="amount" step="0.01" placeholder="Amount (e.g. -50 or 100)" required />
+        <select id="expense-category" required>
+          <option value="Income">Income</option>
+          <option value="Expense">Expense</option>
+        </select>
+        <input type="date" id="date" required />
+        <select id="type-category" required>
+          <option value="">Select category</option>
+          <option value="Food">Food</option>
+          <option value="Rent">Rent</option>
+          <option value="Salary">Salary</option>
+          <option value="Transport">Transport</option>
+          <option value="Other">Other</option>
+        </select>
+        <button type="submit">Add</button>
+      </form>
+    </section>
+
+    <!-- Transactions List -->
+    <section id="transactions">
+      <h3>Transaction History</h3>
+
+      <table id="transaction-table">
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>Amount</th>
+            <th>Income/Expense</th>
+            <th>Category</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- JS will append rows here -->
+        </tbody>
+      </table>    
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Expense Tracker</p>
+  </footer>
+
+  <script type="module" src="scripts/app.js"></script>
+</body>
+</html>
