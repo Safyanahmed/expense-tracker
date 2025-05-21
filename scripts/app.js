@@ -32,6 +32,8 @@ document.getElementById('form').addEventListener('submit', function(e) {
     tbody.innerHTML = '';
     
     transactions.forEach(transaction => {
+      if (transaction.deleted) return; // skip rendering deleted items
+
       const row = document.createElement('tr');
 
       row.innerHTML = `
@@ -39,8 +41,16 @@ document.getElementById('form').addEventListener('submit', function(e) {
       <td>${transaction.expenseCategory === 'Expense' ? '-' : ''}£${transaction.amount.toFixed(2)}</td>
       <td>${transaction.expenseCategory}</td>
       <td>${transaction.typeCategory}</td>
-      <td><button>Delete</button></td>
-    `;
+      <td><button class="delete-btn">Delete</button></td>
+      `;
+
+      const deleteTransactionBtn = row.querySelector('.delete-btn');
+      console.log(deleteTransactionBtn);
+      deleteTransactionBtn.addEventListener('click', () => {
+        transaction.deleted = true;
+        renderTransaction(newTransaction);
+        calcBalance();
+    });
     tbody.appendChild(row);
     });
   }
@@ -51,14 +61,16 @@ document.getElementById('form').addEventListener('submit', function(e) {
     const totalBalance = document.getElementById('balance');
     
     let balance = 0;
-
-    // OLD CODE: loop through array and add all amounts together and render it on screen
-    // transactions.forEach(t => {
-    //   balance += t.amount;
-    // });
+    /*
+    OLD CODE: loop through array and add all amounts together and render it on screen
+    transactions.forEach(t => {
+    balance += t.amount;
+    });
+    */
 
     // NEW CODE: loop through array, check if income or expense then add or subtract accordingly. render results
     transactions.forEach(t => {
+      if (t.deleted) return; // don't calculate deleted items
       if (t.expenseCategory === 'Income') {
         balance += t.amount;
         // const income = document.getElementById('income');
@@ -72,8 +84,11 @@ document.getElementById('form').addEventListener('submit', function(e) {
     console.log(balance);
   }
   calcBalance();
-
 })
+
+
+
+
 
 
 
