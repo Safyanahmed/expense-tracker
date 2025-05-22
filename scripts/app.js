@@ -21,7 +21,7 @@ document.getElementById('form').addEventListener('submit', function(e) {
   }
   // push new array to empty array for each item added
   transactions.push(newTransaction);
-  console.log(transactions);
+  console.log('New transaction array ', transactions);
 
   e.target.reset();
 
@@ -45,8 +45,8 @@ document.getElementById('form').addEventListener('submit', function(e) {
       `;
 
       const deleteTransactionBtn = row.querySelector('.delete-btn');
-      console.log(deleteTransactionBtn);
       deleteTransactionBtn.addEventListener('click', () => {
+        console.log('delete button clicked');
         transaction.deleted = true;
         renderTransaction(newTransaction);
         calcBalance();
@@ -81,10 +81,43 @@ document.getElementById('form').addEventListener('submit', function(e) {
     });
     // if balance is smaller than 0 add minus sign else do nothing. Math.abs remove minus sign before number as i've added my own before £
     totalBalance.textContent = `${balance < 0 ? '-' : ''}£${Math.abs(balance).toFixed(2)}`;
-    console.log(balance);
+    console.log('rendered balance of ', balance);
   }
   calcBalance();
+
+
+  // calculate total income history and render it
+  function calcIncome() {
+  const totalIncome = document.getElementById('income');
+
+  let income = 0;
+
+  transactions.forEach(i => {
+    if (i.expenseCategory === 'Income') {
+      income += i.amount;
+    }
+  });
+  totalIncome.textContent = `£${income.toFixed(2)}`;
+  }
+  calcIncome();
+
+
+  function calcExpense() {
+    const totalExpense = document.getElementById('expenses');
+
+    let expense = 0;
+
+    transactions.forEach(e => {
+      if (e.expenseCategory === 'Expense') {
+        expense -= e.amount;
+      }
+    })
+    totalExpense.textContent = `-£${Math.abs(expense).toFixed(2)}`;
+  }
+  calcExpense();
 })
+
+
 
 
 
