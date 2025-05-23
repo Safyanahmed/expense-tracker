@@ -50,11 +50,51 @@ document.getElementById('form').addEventListener('submit', function(e) {
         transaction.deleted = true;
         renderTransaction(newTransaction);
         calcBalance();
+        calcIncome();
     });
     tbody.appendChild(row);
     });
   }
   renderTransaction(newTransaction);
+
+
+    function renderIncome() {
+    
+      const tbody = document.querySelector('#transaction-table tbody');
+      const transListTitle = document.querySelector('#transactions h3');
+
+      transListTitle.textContent = 'Transaction Income';
+
+      tbody.innerHTML = '';
+      
+      transactions.forEach(t => {
+        if (t.deleted) return; // skip rendering deleted items
+
+        if (t.expenseCategory === 'Income') {
+          const row = document.createElement('tr');
+        
+          row.innerHTML = `
+          <td>${t.description}</td>
+          <td>${t.expenseCategory === 'Expense' ? '-' : ''}£${t.amount.toFixed(2)}</td>
+          <td>${t.expenseCategory}</td>
+          <td>${t.typeCategory}</td>
+          <td><button class="delete-btn">Delete</button></td>
+          `;
+
+          const deleteTransactionBtn = row.querySelector('.delete-btn');
+          deleteTransactionBtn.addEventListener('click', () => {
+          console.log('delete button clicked');
+          t.deleted = true;
+          renderIncome();
+          calcBalance();
+          calcIncome();
+          });
+          tbody.appendChild(row);
+        }     
+      })
+    
+  }
+  incomeFilter.addEventListener('click', renderIncome);
 
 
   function calcBalance() {
@@ -93,6 +133,7 @@ document.getElementById('form').addEventListener('submit', function(e) {
   let income = 0;
 
   transactions.forEach(i => {
+    if (i.deleted) return; // skip rendering deleted items
     if (i.expenseCategory === 'Income') {
       income += i.amount;
     }
@@ -115,7 +156,20 @@ document.getElementById('form').addEventListener('submit', function(e) {
     totalExpense.textContent = `-£${Math.abs(expense).toFixed(2)}`;
   }
   calcExpense();
+
+
+
+
+
+
+
 })
+
+const allFilter = document.getElementById('all-transactions-btn');
+const incomeFilter = document.getElementById('income-btn');
+const expensesFilter = document.getElementById('expenses-btn');
+
+
 
 
 
