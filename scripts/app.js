@@ -26,6 +26,7 @@ document.getElementById('form').addEventListener('submit', function(e) {
   e.target.reset();
 
 
+
   // create a table data for table, append it to tbody HTML element, clear table to remove duplicates and re render
   function renderTransaction() {
     const tbody = document.querySelector('#transaction-table tbody');
@@ -51,6 +52,7 @@ document.getElementById('form').addEventListener('submit', function(e) {
         renderTransaction(newTransaction);
         calcBalance();
         calcIncome();
+        calcExpense();
     });
     tbody.appendChild(row);
     });
@@ -58,49 +60,90 @@ document.getElementById('form').addEventListener('submit', function(e) {
   renderTransaction(newTransaction);
 
 
-    function renderIncome() {
-    
-      const tbody = document.querySelector('#transaction-table tbody');
-      const transListTitle = document.querySelector('#transactions h3');
 
-      transListTitle.textContent = 'Transaction Income';
+  const incomeFilter = document.getElementById('income-btn');
+  function renderIncome() {
+    const tbody = document.querySelector('#transaction-table tbody');
+    const transListTitle = document.querySelector('#transactions h3');
 
-      tbody.innerHTML = '';
+    transListTitle.textContent = 'Transaction Income';
+
+    tbody.innerHTML = '';
       
-      transactions.forEach(t => {
-        if (t.deleted) return; // skip rendering deleted items
+    transactions.forEach(t => {
+      if (t.deleted) return; // skip rendering deleted items
 
-        if (t.expenseCategory === 'Income') {
-          const row = document.createElement('tr');
-        
-          row.innerHTML = `
-          <td>${t.description}</td>
-          <td>${t.expenseCategory === 'Expense' ? '-' : ''}£${t.amount.toFixed(2)}</td>
-          <td>${t.expenseCategory}</td>
-          <td>${t.typeCategory}</td>
-          <td><button class="delete-btn">Delete</button></td>
-          `;
+      if (t.expenseCategory === 'Income') {
+        const row = document.createElement('tr');
+      
+        row.innerHTML = `
+        <td>${t.description}</td>
+        <td>${t.expenseCategory === 'Expense' ? '-' : ''}£${t.amount.toFixed(2)}</td>
+        <td>${t.expenseCategory}</td>
+        <td>${t.typeCategory}</td>
+        <td><button class="delete-btn">Delete</button></td>
+        `;
 
-          const deleteTransactionBtn = row.querySelector('.delete-btn');
-          deleteTransactionBtn.addEventListener('click', () => {
-          console.log('delete button clicked');
-          t.deleted = true;
-          renderIncome();
-          calcBalance();
-          calcIncome();
-          });
-          tbody.appendChild(row);
-        }     
-      })
-    
+        const deleteTransactionBtn = row.querySelector('.delete-btn');
+        deleteTransactionBtn.addEventListener('click', () => {
+        console.log('delete button clicked');
+        t.deleted = true;
+        renderIncome();
+        calcBalance();
+        calcIncome();
+        });
+        tbody.appendChild(row);
+      }     
+    }) 
   }
   incomeFilter.addEventListener('click', renderIncome);
+
+
+
+  const expensesFilter = document.getElementById('expenses-btn');
+  function renderExpenses() {
+    const tbody = document.querySelector('#transaction-table tbody');
+    const transListTitle = document.querySelector('#transactions h3');
+
+    transListTitle.textContent = 'Transaction Expense';
+
+    tbody.innerHTML = '';
+
+    transactions.forEach(t => {
+      if (t.deleted) return; // skip rendering deleted items
+
+      if (t.expenseCategory === 'Expense') {
+        const row = document.createElement('tr');
+      
+        row.innerHTML = `
+        <td>${t.description}</td>
+        <td>${t.expenseCategory === 'Expense' ? '-' : ''}£${t.amount.toFixed(2)}</td>
+        <td>${t.expenseCategory}</td>
+        <td>${t.typeCategory}</td>
+        <td><button class="delete-btn">Delete</button></td>
+        `;
+
+        const deleteTransactionBtn = row.querySelector('.delete-btn');
+        deleteTransactionBtn.addEventListener('click', () => {
+        console.log('delete button clicked');
+        t.deleted = true;
+        renderExpenses();
+        calcBalance();
+        calcExpense();
+        });
+        tbody.appendChild(row);
+      }     
+    })       
+  }
+  expensesFilter.addEventListener('click', renderExpenses);
+
 
 
   function calcBalance() {
     const totalBalance = document.getElementById('balance');
     
     let balance = 0;
+
     /*
     OLD CODE: loop through array and add all amounts together and render it on screen
     transactions.forEach(t => {
@@ -113,17 +156,16 @@ document.getElementById('form').addEventListener('submit', function(e) {
       if (t.deleted) return; // don't calculate deleted items
       if (t.expenseCategory === 'Income') {
         balance += t.amount;
-        // const income = document.getElementById('income');
-        // income.textContent = 
       } else if(t.expenseCategory === 'Expense') {
         balance -= t.amount;
       }
     });
-    // if balance is smaller than 0 add minus sign else do nothing. Math.abs remove minus sign before number as i've added my own before £
+    // if balance is smaller than 0 add minus sign, else do nothing. Math.abs remove minus sign before number as i've added my own before £
     totalBalance.textContent = `${balance < 0 ? '-' : ''}£${Math.abs(balance).toFixed(2)}`;
     console.log('rendered balance of ', balance);
   }
   calcBalance();
+
 
 
   // calculate total income history and render it
@@ -143,12 +185,15 @@ document.getElementById('form').addEventListener('submit', function(e) {
   calcIncome();
 
 
+
+  // calculate total expense history and render it
   function calcExpense() {
     const totalExpense = document.getElementById('expenses');
 
     let expense = 0;
 
     transactions.forEach(e => {
+      if (e.deleted) return; // skip rendering deleted items
       if (e.expenseCategory === 'Expense') {
         expense -= e.amount;
       }
@@ -166,8 +211,8 @@ document.getElementById('form').addEventListener('submit', function(e) {
 })
 
 const allFilter = document.getElementById('all-transactions-btn');
-const incomeFilter = document.getElementById('income-btn');
-const expensesFilter = document.getElementById('expenses-btn');
+
+
 
 
 
