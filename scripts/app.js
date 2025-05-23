@@ -28,6 +28,7 @@ document.getElementById('form').addEventListener('submit', function(e) {
 
 
   // create a table data for table, append it to tbody HTML element, clear table to remove duplicates and re render
+  const allFilter = document.getElementById('all-transactions-btn');
   function renderTransaction() {
     const tbody = document.querySelector('#transaction-table tbody');
     tbody.innerHTML = '';
@@ -57,6 +58,7 @@ document.getElementById('form').addEventListener('submit', function(e) {
     tbody.appendChild(row);
     });
   }
+  allFilter.addEventListener('click', renderTransaction);
   renderTransaction(newTransaction);
 
 
@@ -202,15 +204,8 @@ document.getElementById('form').addEventListener('submit', function(e) {
   }
   calcExpense();
 
-
-
-
-
-
-
 })
 
-const allFilter = document.getElementById('all-transactions-btn');
 
 
 
