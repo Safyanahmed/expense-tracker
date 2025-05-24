@@ -1,225 +1,230 @@
 let transactions = [];
 
-document.getElementById('form').addEventListener('submit', function(e) {
-  e.preventDefault(); // prevent form reloading
+// Load existing transactions on page load
+loadTransactionsFromLocalStorage();
+renderTransaction();
+calcBalance();
+calcIncome();
+calcExpense();
+
+// Save to localStorage
+function saveTransactionsToLocalStorage() {
+  localStorage.setItem('transactions', JSON.stringify(transactions));
+}
+
+// Load from localStorage
+function loadTransactionsFromLocalStorage() {
+  const stored = localStorage.getItem('transactions');
+  transactions = stored ? JSON.parse(stored) : [];
+}
+
+// Handle form submission
+document.getElementById('form').addEventListener('submit', function (e) {
+  e.preventDefault();
 
   const description = document.getElementById('description').value;
-  const amount = document.getElementById('amount').value;
+  const amount = parseFloat(document.getElementById('amount').value);
   const date = document.getElementById('date').value;
   const typeCategory = document.getElementById('type-category').value;
   const expenseCategory = document.getElementById('expense-category').value;
 
-  // create new array
   const newTransaction = {
     id: crypto.randomUUID(),
     description,
-    amount: parseFloat(amount),
+    amount,
     expenseCategory,
     date,
     typeCategory,
     deleted: false
-  }
-  // push new array to empty array for each item added
+  };
+
   transactions.push(newTransaction);
-  console.log('New transaction array ', transactions);
-
+  saveTransactionsToLocalStorage();
+  renderTransaction();
+  calcBalance();
+  calcIncome();
+  calcExpense();
   e.target.reset();
+});
 
+// Render all transactions
+function renderTransaction() {
+  const tbody = document.querySelector('#transaction-table tbody');
+  tbody.innerHTML = '';
 
+  const visibleTransactions = transactions.filter(t => !t.deleted);
+  if (visibleTransactions.length === 0) {
+    const row = document.createElement('tr');
+    const cell = document.createElement('td');
+    cell.colSpan = 5;
+    cell.textContent = 'No transactions';
+    cell.style.textAlign = 'center';
+    row.append(cell);
+    tbody.append(row);
+    return;
+  }
 
-  // create a table data for table, append it to tbody HTML element, clear table to remove duplicates and re render
-  const allFilter = document.getElementById('all-transactions-btn');
-  function renderTransaction() {
-    const tbody = document.querySelector('#transaction-table tbody');
-    tbody.innerHTML = '';
-    
-    transactions.forEach(transaction => {
-      if (transaction.deleted) return; // skip rendering deleted items
-
-      const row = document.createElement('tr');
-
-      row.innerHTML = `
+  visibleTransactions.forEach(transaction => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
       <td>${transaction.description}</td>
       <td>${transaction.expenseCategory === 'Expense' ? '-' : ''}£${transaction.amount.toFixed(2)}</td>
       <td>${transaction.expenseCategory}</td>
       <td>${transaction.typeCategory}</td>
       <td><button class="delete-btn">Delete</button></td>
-      `;
+    `;
 
-      const deleteTransactionBtn = row.querySelector('.delete-btn');
-      deleteTransactionBtn.addEventListener('click', () => {
-        console.log('delete button clicked');
-        transaction.deleted = true;
-        renderTransaction(newTransaction);
-        calcBalance();
-        calcIncome();
-        calcExpense();
+    const deleteBtn = row.querySelector('.delete-btn');
+    deleteBtn.addEventListener('click', () => {
+      transaction.deleted = true;
+      saveTransactionsToLocalStorage();
+      renderTransaction();
+      calcBalance();
+      calcIncome();
+      calcExpense();
     });
+
     tbody.appendChild(row);
+  });
+}
+
+// Filter: All
+document.getElementById('all-transactions-btn').addEventListener('click', renderTransaction);
+
+// Filter: Income
+document.getElementById('income-btn').addEventListener('click', function () {
+  const tbody = document.querySelector('#transaction-table tbody');
+  const transListTitle = document.querySelector('#transactions h3');
+  transListTitle.textContent = 'Transaction Income';
+  tbody.innerHTML = '';
+
+  const incomes = transactions.filter(t => !t.deleted && t.expenseCategory === 'Income');
+  if (incomes.length === 0) {
+    const row = document.createElement('tr');
+    const cell = document.createElement('td');
+    cell.colSpan = 5;
+    cell.textContent = 'No income transactions';
+    cell.style.textAlign = 'center';
+    row.append(cell);
+    tbody.append(row);
+    return;
+  }
+
+  incomes.forEach(t => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${t.description}</td>
+      <td>£${t.amount.toFixed(2)}</td>
+      <td>${t.expenseCategory}</td>
+      <td>${t.typeCategory}</td>
+      <td><button class="delete-btn">Delete</button></td>
+    `;
+
+    const deleteBtn = row.querySelector('.delete-btn');
+    deleteBtn.addEventListener('click', () => {
+      t.deleted = true;
+      saveTransactionsToLocalStorage();
+      calcBalance();
+      calcIncome();
+      renderTransaction(); // Go back to full list or change to renderIncome() if preferred
     });
+
+    tbody.appendChild(row);
+  });
+});
+
+// Filter: Expenses
+document.getElementById('expenses-btn').addEventListener('click', function () {
+  const tbody = document.querySelector('#transaction-table tbody');
+  const transListTitle = document.querySelector('#transactions h3');
+  transListTitle.textContent = 'Transaction Expense';
+  tbody.innerHTML = '';
+
+  const expenses = transactions.filter(t => !t.deleted && t.expenseCategory === 'Expense');
+  if (expenses.length === 0) {
+    const row = document.createElement('tr');
+    const cell = document.createElement('td');
+    cell.colSpan = 5;
+    cell.textContent = 'No expense transactions';
+    cell.style.textAlign = 'center';
+    row.append(cell);
+    tbody.append(row);
+    return;
   }
-  allFilter.addEventListener('click', renderTransaction);
-  renderTransaction(newTransaction);
 
+  expenses.forEach(t => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${t.description}</td>
+      <td>-£${t.amount.toFixed(2)}</td>
+      <td>${t.expenseCategory}</td>
+      <td>${t.typeCategory}</td>
+      <td><button class="delete-btn">Delete</button></td>
+    `;
 
-
-  const incomeFilter = document.getElementById('income-btn');
-  function renderIncome() {
-    const tbody = document.querySelector('#transaction-table tbody');
-    const transListTitle = document.querySelector('#transactions h3');
-
-    transListTitle.textContent = 'Transaction Income';
-
-    tbody.innerHTML = '';
-      
-    transactions.forEach(t => {
-      if (t.deleted) return; // skip rendering deleted items
-
-      if (t.expenseCategory === 'Income') {
-        const row = document.createElement('tr');
-      
-        row.innerHTML = `
-        <td>${t.description}</td>
-        <td>${t.expenseCategory === 'Expense' ? '-' : ''}£${t.amount.toFixed(2)}</td>
-        <td>${t.expenseCategory}</td>
-        <td>${t.typeCategory}</td>
-        <td><button class="delete-btn">Delete</button></td>
-        `;
-
-        const deleteTransactionBtn = row.querySelector('.delete-btn');
-        deleteTransactionBtn.addEventListener('click', () => {
-        console.log('delete button clicked');
-        t.deleted = true;
-        renderIncome();
-        calcBalance();
-        calcIncome();
-        });
-        tbody.appendChild(row);
-      }     
-    }) 
-  }
-  incomeFilter.addEventListener('click', renderIncome);
-
-
-
-  const expensesFilter = document.getElementById('expenses-btn');
-  function renderExpenses() {
-    const tbody = document.querySelector('#transaction-table tbody');
-    const transListTitle = document.querySelector('#transactions h3');
-
-    transListTitle.textContent = 'Transaction Expense';
-
-    tbody.innerHTML = '';
-
-    transactions.forEach(t => {
-      if (t.deleted) return; // skip rendering deleted items
-
-      if (t.expenseCategory === 'Expense') {
-        const row = document.createElement('tr');
-      
-        row.innerHTML = `
-        <td>${t.description}</td>
-        <td>${t.expenseCategory === 'Expense' ? '-' : ''}£${t.amount.toFixed(2)}</td>
-        <td>${t.expenseCategory}</td>
-        <td>${t.typeCategory}</td>
-        <td><button class="delete-btn">Delete</button></td>
-        `;
-
-        const deleteTransactionBtn = row.querySelector('.delete-btn');
-        deleteTransactionBtn.addEventListener('click', () => {
-        console.log('delete button clicked');
-        t.deleted = true;
-        renderExpenses();
-        calcBalance();
-        calcExpense();
-        });
-        tbody.appendChild(row);
-      }     
-    })       
-  }
-  expensesFilter.addEventListener('click', renderExpenses);
-
-
-
-  function calcBalance() {
-    const totalBalance = document.getElementById('balance');
-    
-    let balance = 0;
-
-    /*
-    OLD CODE: loop through array and add all amounts together and render it on screen
-    transactions.forEach(t => {
-    balance += t.amount;
+    const deleteBtn = row.querySelector('.delete-btn');
+    deleteBtn.addEventListener('click', () => {
+      t.deleted = true;
+      saveTransactionsToLocalStorage();
+      calcBalance();
+      calcExpense();
+      renderTransaction(); // Or renderExpenses()
     });
-    */
 
-    // NEW CODE: loop through array, check if income or expense then add or subtract accordingly. render results
-    transactions.forEach(t => {
-      if (t.deleted) return; // don't calculate deleted items
-      if (t.expenseCategory === 'Income') {
-        balance += t.amount;
-      } else if(t.expenseCategory === 'Expense') {
-        balance -= t.amount;
-      }
-    });
-    // if balance is smaller than 0 add minus sign, else do nothing. Math.abs remove minus sign before number as i've added my own before £
-    totalBalance.textContent = `${balance < 0 ? '-' : ''}£${Math.abs(balance).toFixed(2)}`;
-    console.log('rendered balance of ', balance);
-  }
-  calcBalance();
+    tbody.appendChild(row);
+  });
+});
 
+// Calculate and render balance
+function calcBalance() {
+  const totalBalance = document.getElementById('balance');
+  let balance = 0;
 
+  transactions.forEach(t => {
+    if (t.deleted) return;
+    if (t.expenseCategory === 'Income') balance += t.amount;
+    if (t.expenseCategory === 'Expense') balance -= t.amount;
+  });
 
-  // calculate total income history and render it
-  function calcIncome() {
+  totalBalance.textContent = `${balance < 0 ? '-' : ''}£${Math.abs(balance).toFixed(2)}`;
+}
+
+// Calculate total income
+function calcIncome() {
   const totalIncome = document.getElementById('income');
-
   let income = 0;
 
-  transactions.forEach(i => {
-    if (i.deleted) return; // skip rendering deleted items
-    if (i.expenseCategory === 'Income') {
-      income += i.amount;
+  transactions.forEach(t => {
+    if (!t.deleted && t.expenseCategory === 'Income') {
+      income += t.amount;
     }
   });
+
   totalIncome.textContent = `£${income.toFixed(2)}`;
-  }
-  calcIncome();
+}
 
+// Calculate total expenses
+function calcExpense() {
+  const totalExpense = document.getElementById('expenses');
+  let expense = 0;
 
+  transactions.forEach(t => {
+    if (!t.deleted && t.expenseCategory === 'Expense') {
+      expense += t.amount;
+    }
+  });
 
-  // calculate total expense history and render it
-  function calcExpense() {
-    const totalExpense = document.getElementById('expenses');
+  totalExpense.textContent = `-£${expense.toFixed(2)}`;
+}
 
-    let expense = 0;
-
-    transactions.forEach(e => {
-      if (e.deleted) return; // skip rendering deleted items
-      if (e.expenseCategory === 'Expense') {
-        expense -= e.amount;
-      }
-    })
-    totalExpense.textContent = `-£${Math.abs(expense).toFixed(2)}`;
-  }
+// Delete all transactions (permanently)
+document.getElementById('delete-all-btn').addEventListener('click', () => {
+  transactions = [];
+  localStorage.removeItem('transactions');
+  calcBalance();
   calcExpense();
-
+  calcIncome();
+  const tbody = document.querySelector('#transaction-table tbody');
+  tbody.innerHTML = '';
+  renderTransaction();
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
