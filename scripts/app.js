@@ -28,6 +28,11 @@ document.getElementById('form').addEventListener('submit', function (e) {
   const typeCategory = document.getElementById('type-category').value;
   const expenseCategory = document.getElementById('expense-category').value;
 
+  if (amount <= 0 || isNaN(amount)) {
+    alert('Please enter a valid amount greater than 0.');
+    return;
+  }
+
   const newTransaction = {
     id: crypto.randomUUID(),
     description,
