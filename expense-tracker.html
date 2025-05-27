@@ -8,74 +8,88 @@
 </head>
 <body>
 
-  <header>
-    <h1>Expense Tracker</h1>
-  </header>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <header>
+        <h1>Expense Tracker</h1>
+      </header>
 
-  <main>
-    <!-- Balance Summary -->
-    <section id="summary">
-      <h2>Balance: <span id="balance">£0.00</span></h2>
-      <div class="totals">
-        <p>Income: <span id="income">£0.00</span></p>
-        <p>Expenses: <span id="expenses">£0.00</span></p>
-      </div>
-    </section>
+      <!-- Filters -->
+      <section id="filters">
+        <button id="all-transactions-btn">All</button>
+        <button id="income-btn">Income</button>
+        <button id="expenses-btn">Expenses</button>
+        <button id="delete-all-btn">Delete all transactions</button>
+      </section>
 
-    <!-- Transaction Form -->
-    <section id="transaction-form">
-      <h3>Add Transaction</h3>
-      <form id="form">
-        <input type="text" id="description" placeholder="Description" required />
-        <input type="number" id="amount" step="0.01" placeholder="Amount (e.g. -50 or 100)" required />
-        <select id="expense-category" required>
-          <option value="Income">Income</option>
-          <option value="Expense">Expense</option>
-        </select>
-        <input type="date" id="date" required />
-        <select id="type-category" required>
-          <option value="">Select category</option>
-          <option value="Food">Food</option>
-          <option value="Rent">Rent</option>
-          <option value="Salary">Salary</option>
-          <option value="Transport">Transport</option>
-          <option value="Other">Other</option>
-        </select>
-        <button type="submit">Add</button>
-      </form>
-    </section>
+      <footer>
+        <p>&copy; 2025 Expense Tracker</p>
+      </footer>
+    </aside>
 
-    <!-- filters -->
-    <section id="filters">
-      <button id="all-transactions-btn">All</button>
-      <button id="income-btn">Income</button>
-      <button id="expenses-btn">Expenses</button>
-    </section>
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Summary -->
+      <section id="summary">
+        <div class="card-container">
+          <div class="card">
+            <h3>Balance</h3>
+            <p id="balance">£0.00</p>
+          </div>
+          <div class="card">
+            <h3>Income</h3>
+            <p id="income">£0.00</p>
+          </div>
+          <div class="card">
+            <h3>Expenses</h3>
+            <p id="expenses">£0.00</p>
+          </div>
+        </div>
+      </section>
 
-    <!-- Transactions List -->
-    <section id="transactions">
-      <h3>Transaction History</h3>
+      <!-- Transaction Form -->
+      <section id="transaction-form">
+        <h3>Add Transaction</h3>
+        <form id="form">
+          <input type="text" id="description" placeholder="Description" required />
+          <input type="number" id="amount" step="0.01" placeholder="Amount (e.g. -50 or 100)" required />
+          <select id="expense-category" required>
+            <option value="Income">Income</option>
+            <option value="Expense">Expense</option>
+          </select>
+          <input type="date" id="date" required />
+          <select id="type-category" required>
+            <option value="">Select category</option>
+            <option value="Food">Food</option>
+            <option value="Rent">Rent</option>
+            <option value="Salary">Salary</option>
+            <option value="Transport">Transport</option>
+            <option value="Other">Other</option>
+          </select>
+          <button type="submit">Add</button>
+        </form>
+      </section>
 
-      <table id="transaction-table">
-        <thead>
-          <tr>
-            <th>Description</th>
-            <th>Amount</th>
-            <th>Income/Expense</th>
-            <th>Category</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- JS will append rows here -->
-        </tbody>
-      </table>    
-      <button id="delete-all-btn">Delete all transactions</button>
-    </section>
-  </main>
-
-  <footer>
-    <p>&copy; 2025 Expense Tracker</p>
-  </footer>
+      <!-- Transactions List -->
+      <section id="transactions">
+        <h3>Transaction History</h3>
+        <table id="transaction-table">
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th>Amount</th>
+              <th>Income/Expense</th>
+              <th>Category</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- JS will append rows here -->
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
 
   <script type="module" src="scripts/app.js"></script>
 </body>

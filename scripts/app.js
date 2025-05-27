@@ -89,7 +89,7 @@ function renderTransaction() {
       calcExpense();
     });
 
-    tbody.appendChild(row);
+    tbody.prepend(row);
   });
 }
 
@@ -134,7 +134,7 @@ document.getElementById('income-btn').addEventListener('click', function () {
       renderTransaction(); // Go back to full list or change to renderIncome() if preferred
     });
 
-    tbody.appendChild(row);
+    tbody.prepend(row);
   });
 });
 
@@ -176,7 +176,7 @@ document.getElementById('expenses-btn').addEventListener('click', function () {
       renderTransaction(); // Or renderExpenses()
     });
 
-    tbody.appendChild(row);
+    tbody.prepend(row);
   });
 });
 

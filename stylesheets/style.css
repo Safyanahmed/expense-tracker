@@ -1,0 +1,212 @@
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f6f8;
+  color: #333;
+  height: 100vh;
+}
+
+/* App Layout */
+.app-container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.sidebar {
+  background-color: #1f2937;
+  color: #fff;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.sidebar h1 {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+#filters {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+
+.sidebar button {
+  background-color: #374151;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.2s ease;
+}
+
+.sidebar button:hover {
+  background-color: #4b5563;
+}
+
+.sidebar footer {
+  font-size: 0.8rem;
+  text-align: center;
+  margin-top: 2rem;
+  color: #ccc;
+}
+
+/* Main Content */
+.main-content {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 30px;
+  background-color: #ffffff;
+}
+
+/* Summary */
+#summary {
+  background-color: #e5e7eb;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+#summary h2 {
+  margin-bottom: 10px;
+}
+
+#summary .totals p {
+  margin-top: 5px;
+}
+
+/* Summary Cards */
+.card-container {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.card {
+  flex: 1;
+  min-width: 150px;
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.card h3 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.card p {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Form Section */
+#transaction-form {
+  margin-bottom: 30px;
+}
+
+#transaction-form h3 {
+  margin-bottom: 10px;
+}
+
+#form input,
+#form select,
+#form button {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+#form button {
+  background-color: #10b981;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+#form button:hover {
+  background-color: #059669;
+}
+
+/* Transactions Table */
+#transactions h3 {
+  margin-bottom: 10px;
+}
+
+#transaction-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+#transaction-table th,
+#transaction-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+#transaction-table th {
+  background-color: #f3f4f6;
+}
+
+#transaction-table tbody tr:nth-child(even) {
+  background-color: #f9fafb;
+}
+
+#delete-all-btn, .delete-btn {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#delete-all-btn:hover, .delete-btn:hover {
+  background-color: #dc2626;
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .sidebar section,
+  .sidebar footer {
+    display: none;
+  }
+
+  .main-content {
+    padding: 15px;
+  }
+}
