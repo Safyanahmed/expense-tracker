@@ -55,6 +55,8 @@ document.getElementById('form').addEventListener('submit', function (e) {
 // Render all transactions
 function renderTransaction() {
   const tbody = document.querySelector('#transaction-table tbody');
+  const transListTitle = document.querySelector('#transactions h3');
+  transListTitle.textContent = 'Transaction History';
   tbody.innerHTML = '';
 
   const visibleTransactions = transactions.filter(t => !t.deleted);
@@ -131,7 +133,7 @@ document.getElementById('income-btn').addEventListener('click', function () {
       saveTransactionsToLocalStorage();
       calcBalance();
       calcIncome();
-      renderTransaction(); // Go back to full list or change to renderIncome() if preferred
+      renderTransaction();
     });
 
     tbody.prepend(row);
@@ -223,7 +225,19 @@ function calcExpense() {
 }
 
 // Delete all transactions (permanently)
-document.getElementById('delete-all-btn').addEventListener('click', () => {
+
+const deleteAllBtn = document.getElementById('delete-all-btn');
+const modal = document.getElementById('confirm-modal');
+const confirmBtn = document.getElementById('confirm-delete');
+const cancelBtn = document.getElementById('cancel-delete');
+
+
+
+deleteAllBtn.addEventListener('click', () => {
+  modal.classList.remove('hidden');
+})
+
+confirmBtn.addEventListener('click', () => {
   transactions = [];
   localStorage.removeItem('transactions');
   calcBalance();
@@ -232,4 +246,10 @@ document.getElementById('delete-all-btn').addEventListener('click', () => {
   const tbody = document.querySelector('#transaction-table tbody');
   tbody.innerHTML = '';
   renderTransaction();
+  modal.classList.add('hidden');
 })
+
+cancelBtn.addEventListener('click', () => {
+  modal.classList.add('hidden');
+})
+
