@@ -42,7 +42,7 @@ body {
 }
 
 
-.sidebar button {
+.sidebar button, #load-more-btn {
   background-color: #374151;
   color: #fff;
   border: none;
@@ -53,7 +53,7 @@ body {
   transition: background 0.2s ease;
 }
 
-.sidebar button:hover {
+.sidebar button:hover, #load-more-btn:hover{
   background-color: #4b5563;
 }
 
@@ -104,6 +104,18 @@ body {
   border-radius: 10px;
   text-align: center;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.balance-card-hidden {
+  background-color:#fdecea;
+}
+
+.balance-card-hidden p {
+  color: #c0392b;
+}
+
+.balance-card-hidden h3 {
+  color: #c0392b !important;
 }
 
 .card h3 {

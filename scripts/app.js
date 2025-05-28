@@ -1,7 +1,10 @@
 let transactions = [];
+let visibleCount = 0;
+let itemsPerPage = 5;
 
 // Load existing transactions on page load
 loadTransactionsFromLocalStorage();
+visibleCount = 0;
 renderTransaction();
 calcBalance();
 calcIncome();
@@ -52,15 +55,21 @@ document.getElementById('form').addEventListener('submit', function (e) {
   e.target.reset();
 });
 
+
 // Render all transactions
 function renderTransaction() {
   const tbody = document.querySelector('#transaction-table tbody');
   const transListTitle = document.querySelector('#transactions h3');
   transListTitle.textContent = 'Transaction History';
+  const visibleTransactions = transactions
+  .filter(t => !t.deleted)
+  .slice(0, visibleCount + itemsPerPage);
+
   tbody.innerHTML = '';
 
-  const visibleTransactions = transactions.filter(t => !t.deleted);
-  if (visibleTransactions.length === 0) {
+  // check if there is no transactions and write No Transactions on the table
+  const filteredTransactions = transactions.filter(t => !t.deleted);
+  if (filteredTransactions.length === 0) {
     const row = document.createElement('tr');
     const cell = document.createElement('td');
     cell.colSpan = 5;
@@ -93,7 +102,16 @@ function renderTransaction() {
 
     tbody.prepend(row);
   });
+  visibleCount += itemsPerPage;
+
+  if(visibleCount >= transactions.filter(t => !t.deleted).length) {
+    document.getElementById('load-more-btn').style.display = 'none';
+  }
 }
+
+document.getElementById('load-more-btn').addEventListener('click', () => {
+  renderTransaction();
+});
 
 // Filter: All
 document.getElementById('all-transactions-btn').addEventListener('click', renderTransaction);
@@ -194,6 +212,15 @@ function calcBalance() {
   });
 
   totalBalance.textContent = `${balance < 0 ? '-' : ''}£${Math.abs(balance).toFixed(2)}`;
+  
+  const balanceCard = document.querySelector('.card');
+  balanceCard.classList.remove('balance-card-hideden');
+
+  if (balance < 0) {
+    balanceCard.classList.add('balance-card-hidden');
+  } else {
+    balanceCard.classList.remove('balance-card-hidden');
+  }
 }
 
 // Calculate total income

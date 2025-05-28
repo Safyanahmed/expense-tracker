@@ -33,7 +33,7 @@
       <!-- Summary -->
       <section id="summary">
         <div class="card-container">
-          <div class="card">
+          <div class="card balance-card-hidden">
             <h3>Balance</h3>
             <p id="balance">£0.00</p>
           </div>
@@ -53,7 +53,7 @@
         <h3>Add Transaction</h3>
         <form id="form">
           <input type="text" id="description" placeholder="Description" required />
-          <input type="number" id="amount" step="0.01" placeholder="Amount (e.g. -50 or 100)" required />
+          <input type="number" id="amount" step="0.01" placeholder="Amount" required />
           <select id="expense-category" required>
             <option value="Income">Income</option>
             <option value="Expense">Expense</option>
@@ -80,13 +80,14 @@
               <th>Description</th>
               <th>Amount</th>
               <th>Income/Expense</th>
-              <th>Category</th>
+              <th>Type</th>
             </tr>
           </thead>
           <tbody>
             <!-- JS will append rows here -->
           </tbody>
         </table>
+        <button id="load-more-btn">Load More</button>
       </section>
     </main>
   </div>
@@ -94,7 +95,7 @@
   <!-- Delete all transactions confirm modal-->
   <div id="confirm-modal" class="modal hidden">
   <div class="modal-content">
-    <p>Are you sure you want to delete all transactions?<br> Once deleted they cannot be recovered.</p>
+    <p>Are you sure you want to delete all transactions?<br> Once deleted, transactions cannot be recovered.</p>
     <div class="modal-actions">
       <button id="cancel-delete" class="btn cancel">Cancel</button>
       <button id="confirm-delete" class="btn delete">Confirm delete</button>
