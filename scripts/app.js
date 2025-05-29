@@ -72,7 +72,7 @@ function renderTransaction() {
     return true; // 'all'
   });
 
-  const visible = filtered.slice(0, visibleCount + itemsPerPage);
+  const visible = filtered.reverse().slice(0, visibleCount + itemsPerPage);
 
   // Title update
   if (currentFilter === 'income') {
@@ -117,7 +117,7 @@ function renderTransaction() {
       renderTransaction();
     });
 
-    tbody.prepend(row);
+    tbody.append(row);
   });
 
   // Show/hide Load More button
