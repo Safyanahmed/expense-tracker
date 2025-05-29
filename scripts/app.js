@@ -1,4 +1,5 @@
 let transactions = [];
+let currentFilter = 'all';
 let visibleCount = 0;
 let itemsPerPage = 5;
 
@@ -56,20 +57,34 @@ document.getElementById('form').addEventListener('submit', function (e) {
 });
 
 
-// Render all transactions
+
+
 function renderTransaction() {
   const tbody = document.querySelector('#transaction-table tbody');
   const transListTitle = document.querySelector('#transactions h3');
-  transListTitle.textContent = 'Transaction History';
-  const visibleTransactions = transactions
-  .filter(t => !t.deleted)
-  .slice(0, visibleCount + itemsPerPage);
-
   tbody.innerHTML = '';
 
-  // check if there is no transactions and write No Transactions on the table
-  const filteredTransactions = transactions.filter(t => !t.deleted);
-  if (filteredTransactions.length === 0) {
+  // Filter transactions based on currentFilter
+  const filtered = transactions.filter(t => {
+    if (t.deleted) return false;
+    if (currentFilter === 'income') return t.expenseCategory === 'Income';
+    if (currentFilter === 'expense') return t.expenseCategory === 'Expense';
+    return true; // 'all'
+  });
+
+  const visible = filtered.slice(0, visibleCount + itemsPerPage);
+
+  // Title update
+  if (currentFilter === 'income') {
+    transListTitle.textContent = 'Transaction Income';
+  } else if (currentFilter === 'expense') {
+    transListTitle.textContent = 'Transaction Expense';
+  } else {
+    transListTitle.textContent = 'Transaction History';
+  }
+
+  // No transactions message
+  if (filtered.length === 0) {
     const row = document.createElement('tr');
     const cell = document.createElement('td');
     cell.colSpan = 5;
@@ -77,128 +92,63 @@ function renderTransaction() {
     cell.style.textAlign = 'center';
     row.append(cell);
     tbody.append(row);
+    document.getElementById('load-more-btn').style.display = 'none';
     return;
   }
 
-  visibleTransactions.forEach(transaction => {
+  // Render each visible transaction
+  visible.forEach(t => {
     const row = document.createElement('tr');
     row.innerHTML = `
-      <td>${transaction.description}</td>
-      <td>${transaction.expenseCategory === 'Expense' ? '-' : ''}£${transaction.amount.toFixed(2)}</td>
-      <td>${transaction.expenseCategory}</td>
-      <td>${transaction.typeCategory}</td>
+      <td>${t.description}</td>
+      <td>${t.expenseCategory === 'Expense' ? '-' : ''}£${t.amount.toFixed(2)}</td>
+      <td>${t.expenseCategory}</td>
+      <td>${t.typeCategory}</td>
       <td><button class="delete-btn">Delete</button></td>
     `;
 
-    const deleteBtn = row.querySelector('.delete-btn');
-    deleteBtn.addEventListener('click', () => {
-      transaction.deleted = true;
+    row.querySelector('.delete-btn').addEventListener('click', () => {
+      t.deleted = true;
       saveTransactionsToLocalStorage();
-      renderTransaction();
       calcBalance();
       calcIncome();
       calcExpense();
+      renderTransaction();
     });
 
     tbody.prepend(row);
   });
-  visibleCount += itemsPerPage;
 
-  if(visibleCount >= transactions.filter(t => !t.deleted).length) {
-    document.getElementById('load-more-btn').style.display = 'none';
-  }
+  // Show/hide Load More button
+  visibleCount += itemsPerPage;
+  const loadMoreBtn = document.getElementById('load-more-btn');
+  loadMoreBtn.style.display = visibleCount >= filtered.length ? 'none' : 'block';
 }
 
+// Load More button logic
 document.getElementById('load-more-btn').addEventListener('click', () => {
   renderTransaction();
 });
 
-// Filter: All
-document.getElementById('all-transactions-btn').addEventListener('click', renderTransaction);
-
-// Filter: Income
-document.getElementById('income-btn').addEventListener('click', function () {
-  const tbody = document.querySelector('#transaction-table tbody');
-  const transListTitle = document.querySelector('#transactions h3');
-  transListTitle.textContent = 'Transaction Income';
-  tbody.innerHTML = '';
-
-  const incomes = transactions.filter(t => !t.deleted && t.expenseCategory === 'Income');
-  if (incomes.length === 0) {
-    const row = document.createElement('tr');
-    const cell = document.createElement('td');
-    cell.colSpan = 5;
-    cell.textContent = 'No income transactions';
-    cell.style.textAlign = 'center';
-    row.append(cell);
-    tbody.append(row);
-    return;
-  }
-
-  incomes.forEach(t => {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${t.description}</td>
-      <td>£${t.amount.toFixed(2)}</td>
-      <td>${t.expenseCategory}</td>
-      <td>${t.typeCategory}</td>
-      <td><button class="delete-btn">Delete</button></td>
-    `;
-
-    const deleteBtn = row.querySelector('.delete-btn');
-    deleteBtn.addEventListener('click', () => {
-      t.deleted = true;
-      saveTransactionsToLocalStorage();
-      calcBalance();
-      calcIncome();
-      renderTransaction();
-    });
-
-    tbody.prepend(row);
-  });
+// Filter buttons logic
+document.getElementById('all-transactions-btn').addEventListener('click', () => {
+  currentFilter = 'all';
+  visibleCount = 0;
+  renderTransaction();
 });
 
-// Filter: Expenses
-document.getElementById('expenses-btn').addEventListener('click', function () {
-  const tbody = document.querySelector('#transaction-table tbody');
-  const transListTitle = document.querySelector('#transactions h3');
-  transListTitle.textContent = 'Transaction Expense';
-  tbody.innerHTML = '';
-
-  const expenses = transactions.filter(t => !t.deleted && t.expenseCategory === 'Expense');
-  if (expenses.length === 0) {
-    const row = document.createElement('tr');
-    const cell = document.createElement('td');
-    cell.colSpan = 5;
-    cell.textContent = 'No expense transactions';
-    cell.style.textAlign = 'center';
-    row.append(cell);
-    tbody.append(row);
-    return;
-  }
-
-  expenses.forEach(t => {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${t.description}</td>
-      <td>-£${t.amount.toFixed(2)}</td>
-      <td>${t.expenseCategory}</td>
-      <td>${t.typeCategory}</td>
-      <td><button class="delete-btn">Delete</button></td>
-    `;
-
-    const deleteBtn = row.querySelector('.delete-btn');
-    deleteBtn.addEventListener('click', () => {
-      t.deleted = true;
-      saveTransactionsToLocalStorage();
-      calcBalance();
-      calcExpense();
-      renderTransaction(); // Or renderExpenses()
-    });
-
-    tbody.prepend(row);
-  });
+document.getElementById('income-btn').addEventListener('click', () => {
+  currentFilter = 'income';
+  visibleCount = 0;
+  renderTransaction();
 });
+
+document.getElementById('expenses-btn').addEventListener('click', () => {
+  currentFilter = 'expense';
+  visibleCount = 0;
+  renderTransaction();
+});
+
 
 // Calculate and render balance
 function calcBalance() {
