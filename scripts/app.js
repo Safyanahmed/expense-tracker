@@ -100,9 +100,10 @@ function renderTransaction() {
   visible.forEach(t => {
     const row = document.createElement('tr');
     row.innerHTML = `
+      <td>${t.date}</td>
       <td>${t.description}</td>
-      <td>${t.expenseCategory === 'Expense' ? '-' : ''}£${t.amount.toFixed(2)}</td>
       <td>${t.expenseCategory}</td>
+      <td>${t.expenseCategory === 'Expense' ? '-' : ''}£${t.amount.toFixed(2)}</td>
       <td>${t.typeCategory}</td>
       <td><button class="delete-btn">Delete</button></td>
     `;
