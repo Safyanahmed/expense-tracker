@@ -1,7 +1,7 @@
 let transactions = [];
 let currentFilter = 'all';
 let visibleCount = 0;
-let itemsPerPage = 5;
+let itemsPerPage = 10;
 
 // Load existing transactions on page load
 loadTransactionsFromLocalStorage();
