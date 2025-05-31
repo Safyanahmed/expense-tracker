@@ -87,7 +87,7 @@ function renderTransaction() {
   if (filtered.length === 0) {
     const row = document.createElement('tr');
     const cell = document.createElement('td');
-    cell.colSpan = 5;
+    cell.colSpan = 6;
     cell.textContent = 'No transactions';
     cell.style.textAlign = 'center';
     row.append(cell);
@@ -139,7 +139,7 @@ function renderTransaction() {
   if(deletedTransactions.length === 0) {
     const row = document.createElement('tr');
     const cell = document.createElement('td');
-    cell.colSpan = 5;
+    cell.colSpan = 6;
     cell.textContent = 'No deleted transactions';
     cell.style.textAlign = 'center';
     row.append(cell);
