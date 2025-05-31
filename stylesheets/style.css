@@ -42,7 +42,7 @@ body {
 }
 
 
-.sidebar button, #load-more-btn {
+.sidebar button, #load-more-btn, .restore-btn {
   background-color: #374151;
   color: #fff;
   border: none;
@@ -53,7 +53,7 @@ body {
   transition: background 0.2s ease;
 }
 
-.sidebar button:hover, #load-more-btn:hover{
+.sidebar button:hover, #load-more-btn:hover, .restore-btn:hover{
   background-color: #4b5563;
 }
 

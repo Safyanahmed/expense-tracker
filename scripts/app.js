@@ -126,6 +126,52 @@ function renderTransaction() {
   loadMoreBtn.style.display = visibleCount >= filtered.length ? 'none' : 'block';
 }
 
+  // render deleted transactions
+  function renderDeletedTransactions() {
+  const tbody = document.querySelector('#transaction-table tbody');
+  const transListTitle = document.querySelector('#transactions h3');
+  tbody.innerHTML = '';
+
+  transListTitle.textContent = 'Binned Transactions';
+
+  const deletedTransactions = transactions.filter(t => t.deleted);
+
+  if(deletedTransactions.length === 0) {
+    const row = document.createElement('tr');
+    const cell = document.createElement('td');
+    cell.colSpan = 5;
+    cell.textContent = 'No deleted transactions';
+    cell.style.textAlign = 'center';
+    row.append(cell);
+    tbody.append(row);
+    return;
+  };
+
+  deletedTransactions.forEach(transaction => {
+    const row = document.createElement('tr');
+    row.innerHTML= `
+    <td>${transaction.date}</td>
+    <td>${transaction.description}</td>
+    <td>${transaction.expenseCategory}</td>
+    <td>${transaction.expenseCategory === 'Expense' ? '-' : ''}£${transaction.amount.toFixed(2)}</td>
+    <td>${transaction.typeCategory}</td>
+    <td><button class="restore-btn">Restore</button></td>
+    `;
+
+    const restoreBtn = row.querySelector('.restore-btn')
+    restoreBtn.addEventListener('click', () => {
+      transaction.deleted = false;
+      saveTransactionsToLocalStorage();
+      renderDeletedTransactions();
+      calcBalance();
+      calcIncome();
+      calcExpense();
+    });
+    tbody.append(row);
+  });
+
+}
+
 // Load More button logic
 document.getElementById('load-more-btn').addEventListener('click', () => {
   renderTransaction();
@@ -149,6 +195,10 @@ document.getElementById('expenses-btn').addEventListener('click', () => {
   visibleCount = 0;
   renderTransaction();
 });
+
+document.getElementById('bin-btn').addEventListener('click', renderDeletedTransactions);
+
+
 
 
 // Calculate and render balance
