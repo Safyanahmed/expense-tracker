@@ -75,7 +75,10 @@
 
       <!-- Transactions List -->
       <section id="transactions">
+        <div class="title-container">
         <h3>Transaction History</h3>
+        <button id="empty-bin-btn">Empty bin</button>
+        </div>
         <table id="transaction-table">
           <thead>
             <tr>
@@ -103,6 +106,17 @@
     <div class="modal-actions">
       <button id="cancel-delete" class="btn cancel">Cancel</button>
       <button id="confirm-delete" class="btn delete">Confirm delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- Delete binned transactions confirm modal-->
+  <div id="confirm-bin-modal" class="modal hidden">
+  <div class="modal-content">
+    <p>Are you sure you want to delete binned transactions?<br> Once deleted, binned transactions cannot be recovered.</p>
+    <div class="modal-actions">
+      <button id="cancel-bin-delete" class="btn cancel">Cancel</button>
+      <button id="confirm-bin-delete" class="btn delete">Confirm delete</button>
     </div>
   </div>
 </div>

@@ -126,8 +126,8 @@ function renderTransaction() {
   loadMoreBtn.style.display = visibleCount >= filtered.length ? 'none' : 'block';
 }
 
-  // render deleted transactions
-  function renderDeletedTransactions() {
+// render deleted transactions
+function renderDeletedTransactions() {
   const tbody = document.querySelector('#transaction-table tbody');
   const transListTitle = document.querySelector('#transactions h3');
   tbody.innerHTML = '';
@@ -172,6 +172,7 @@ function renderTransaction() {
 
 }
 
+
 // Load More button logic
 document.getElementById('load-more-btn').addEventListener('click', () => {
   renderTransaction();
@@ -197,6 +198,8 @@ document.getElementById('expenses-btn').addEventListener('click', () => {
 });
 
 document.getElementById('bin-btn').addEventListener('click', renderDeletedTransactions);
+
+
 
 
 
@@ -260,7 +263,6 @@ const confirmBtn = document.getElementById('confirm-delete');
 const cancelBtn = document.getElementById('cancel-delete');
 
 
-
 deleteAllBtn.addEventListener('click', () => {
   modal.classList.remove('hidden');
 })
@@ -279,5 +281,32 @@ confirmBtn.addEventListener('click', () => {
 
 cancelBtn.addEventListener('click', () => {
   modal.classList.add('hidden');
+})
+
+// Delete binned transactions (permanently)
+
+const deleteBinBtn = document.getElementById('empty-bin-btn');
+const modalBin = document.getElementById('confirm-bin-modal');
+const confirmBinDeleteBtn = document.getElementById('confirm-bin-delete');
+const cancelBinBtn = document.getElementById('cancel-bin-delete');
+
+deleteBinBtn.addEventListener('click', () => {
+  modalBin.classList.remove('hidden');
+})
+
+confirmBinDeleteBtn.addEventListener('click', () => {
+  transactions = transactions.filter(t => !t.deleted);
+
+  saveTransactionsToLocalStorage();
+  renderDeletedTransactions();
+  calcBalance();
+  calcIncome();
+  calcExpense();
+
+  modalBin.classList.add('hidden');
+});
+
+cancelBinBtn.addEventListener('click', () => {
+  modalBin.classList.add('hidden');
 })
 
