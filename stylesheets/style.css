@@ -47,7 +47,7 @@ body {
 }
 
 
-.sidebar button, #load-more-btn, .restore-btn {
+.sidebar button, #load-more-btn {
   background-color: #374151;
   color: #fff;
   border: none;
@@ -58,7 +58,7 @@ body {
   transition: background 0.2s ease;
 }
 
-.sidebar button:hover, #load-more-btn:hover, .restore-btn:hover{
+.sidebar button:hover, #load-more-btn:hover {
   background-color: #4b5563;
 }
 
@@ -209,6 +209,20 @@ body {
 
 #delete-all-btn:hover, .delete-btn:hover, #empty-bin-btn:hover {
   background-color: #dc2626;
+}
+
+.restore-btn {
+  background-color: #374151;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.2s ease;
+}
+
+.restore-btn:hover{
+  background-color: #4b5563;
 }
 
 /*Delete all confirm modal*/

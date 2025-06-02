@@ -116,6 +116,7 @@ function renderTransaction() {
       calcExpense();
       renderTransaction();
     });
+    
 
     tbody.append(row);
   });
@@ -183,24 +184,27 @@ document.getElementById('all-transactions-btn').addEventListener('click', () => 
   currentFilter = 'all';
   visibleCount = 0;
   renderTransaction();
+  emptyBinBtn.classList.add('hidden');
 });
 
 document.getElementById('income-btn').addEventListener('click', () => {
   currentFilter = 'income';
   visibleCount = 0;
   renderTransaction();
+  emptyBinBtn.classList.add('hidden');
 });
 
 document.getElementById('expenses-btn').addEventListener('click', () => {
   currentFilter = 'expense';
   visibleCount = 0;
   renderTransaction();
+  emptyBinBtn.classList.add('hidden');
 });
 
-document.getElementById('bin-btn').addEventListener('click', renderDeletedTransactions);
-
-
-
+document.getElementById('bin-btn').addEventListener('click', () => {
+  renderDeletedTransactions();
+  emptyBinBtn.classList.remove('hidden');
+});
 
 
 
@@ -218,7 +222,7 @@ function calcBalance() {
   totalBalance.textContent = `${balance < 0 ? '-' : ''}£${Math.abs(balance).toFixed(2)}`;
   
   const balanceCard = document.querySelector('.card');
-  balanceCard.classList.remove('balance-card-hideden');
+  balanceCard.classList.remove('balance-card-hidden');
 
   if (balance < 0) {
     balanceCard.classList.add('balance-card-hidden');
@@ -285,12 +289,12 @@ cancelBtn.addEventListener('click', () => {
 
 // Delete binned transactions (permanently)
 
-const deleteBinBtn = document.getElementById('empty-bin-btn');
+const emptyBinBtn = document.getElementById('empty-bin-btn');
 const modalBin = document.getElementById('confirm-bin-modal');
 const confirmBinDeleteBtn = document.getElementById('confirm-bin-delete');
 const cancelBinBtn = document.getElementById('cancel-bin-delete');
 
-deleteBinBtn.addEventListener('click', () => {
+emptyBinBtn.addEventListener('click', () => {
   modalBin.classList.remove('hidden');
 })
 
@@ -305,8 +309,3 @@ confirmBinDeleteBtn.addEventListener('click', () => {
 
   modalBin.classList.add('hidden');
 });
-
-cancelBinBtn.addEventListener('click', () => {
-  modalBin.classList.add('hidden');
-})
-
