@@ -100,12 +100,12 @@ function renderTransaction() {
   visible.forEach(t => {
     const row = document.createElement('tr');
     row.innerHTML = `
-      <td>${t.date}</td>
-      <td>${t.description}</td>
-      <td>${t.expenseCategory}</td>
-      <td>${t.expenseCategory === 'Expense' ? '-' : ''}£${t.amount.toFixed(2)}</td>
-      <td>${t.typeCategory}</td>
-      <td><button class="delete-btn">Delete</button></td>
+      <td data-label="Date">${t.date}</td>
+      <td data-label="Description">${t.description}</td>
+      <td data-label="Income/Expense">${t.expenseCategory}</td>
+      <td data-label="Amount">${t.expenseCategory === 'Expense' ? '-' : ''}£${t.amount.toFixed(2)}</td>
+      <td data-label="Type">${t.typeCategory}</td>
+      <td data-label="Actions"><button class="delete-btn">Delete</button></td>
     `;
 
     row.querySelector('.delete-btn').addEventListener('click', () => {
@@ -151,12 +151,12 @@ function renderDeletedTransactions() {
   deletedTransactions.forEach(transaction => {
     const row = document.createElement('tr');
     row.innerHTML= `
-    <td>${transaction.date}</td>
-    <td>${transaction.description}</td>
-    <td>${transaction.expenseCategory}</td>
-    <td>${transaction.expenseCategory === 'Expense' ? '-' : ''}£${transaction.amount.toFixed(2)}</td>
-    <td>${transaction.typeCategory}</td>
-    <td><button class="restore-btn">Restore</button></td>
+    <td data-label="Date">${transaction.date}</td>
+    <td data-label="Description">${transaction.description}</td>
+    <td data-label="Income/Expense">${transaction.expenseCategory}</td>
+    <td data-label="Amount">${transaction.expenseCategory === 'Expense' ? '-' : ''}£${transaction.amount.toFixed(2)}</td>
+    <td data-label="Type">${transaction.typeCategory}</td>
+    <td data-label="Actions"><button class="restore-btn">Restore</button></td>
     `;
 
     const restoreBtn = row.querySelector('.restore-btn')

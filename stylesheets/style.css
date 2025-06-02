@@ -322,3 +322,63 @@ body {
     padding: 15px;
   }
 }
+
+
+/*responsive card summary*/
+@media (max-width: 600px) {
+  .card-container {
+    flex-direction: row;
+  }
+
+  .balance-card {
+    flex-basis: 100%;
+  }
+}
+
+
+/* change table layout to card layout for mobile */
+@media (max-width: 600px) {
+  #transaction-table, 
+  #transaction-table thead, 
+  #transaction-table tbody, 
+  #transaction-table th, 
+  #transaction-table td, 
+  #transaction-table tr {
+    display: block;
+    width: 100%;
+  }
+
+  #transaction-table thead {
+    display: none; /* Hide table header on mobile */
+  }
+
+  #transaction-table tr {
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 10px;
+    background-color: #fff;
+  }
+
+  #transaction-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border: none;
+    border-bottom: 1px solid #eee;
+  }
+
+  #transaction-table td:last-child {
+    border-bottom: none;
+  }
+
+  #transaction-table td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    color: #374151;
+    margin-right: 10px;
+  }
+}
+
