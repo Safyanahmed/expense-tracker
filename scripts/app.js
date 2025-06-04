@@ -104,9 +104,36 @@ function renderTransaction() {
       <td data-label="Description">${t.description}</td>
       <td data-label="Income/Expense">${t.expenseCategory}</td>
       <td data-label="Amount">${t.expenseCategory === 'Expense' ? '-' : ''}£${t.amount.toFixed(2)}</td>
-      <td data-label="Type">${t.typeCategory}</td>
+      <td data-label="Type"></td> 
       <td data-label="Actions"><button class="delete-btn">Delete</button></td>
     `;
+
+    // Add category label with colors
+    const categoryCell = row.querySelector('td:nth-child(5)');
+    const label = document.createElement('span');
+    label.classList.add('label');
+    label.textContent = t.typeCategory;
+
+    // Apply colour classes based on category
+    switch (t.typeCategory) {
+      case 'Food':
+        label.classList.add('label-food');
+        break;
+      case 'Rent':
+        label.classList.add('label-rent');
+        break;
+      case 'Salary':
+        label.classList.add('label-salary');
+        break;
+      case 'Transport':
+        label.classList.add('label-transport');
+        break;
+      default:
+        label.classList.add('label-default');
+        break;
+    }
+
+    categoryCell.appendChild(label);
 
     row.querySelector('.delete-btn').addEventListener('click', () => {
       t.deleted = true;
@@ -117,9 +144,11 @@ function renderTransaction() {
       renderTransaction();
     });
     
-
+    
     tbody.append(row);
+    
   });
+  
 
   // Show/hide Load More button
   visibleCount += itemsPerPage;
@@ -155,9 +184,36 @@ function renderDeletedTransactions() {
     <td data-label="Description">${transaction.description}</td>
     <td data-label="Income/Expense">${transaction.expenseCategory}</td>
     <td data-label="Amount">${transaction.expenseCategory === 'Expense' ? '-' : ''}£${transaction.amount.toFixed(2)}</td>
-    <td data-label="Type">${transaction.typeCategory}</td>
+    <td data-label="Type"></td>
     <td data-label="Actions"><button class="restore-btn">Restore</button></td>
     `;
+
+    // Add category label with colors
+  const categoryCell = row.querySelector('td:nth-child(5)');
+  const label = document.createElement('span');
+  label.classList.add('label');
+  label.textContent = transaction.typeCategory;
+
+  // Apply colour classes based on category
+  switch (transaction.typeCategory) {
+    case 'Food':
+      label.classList.add('label-food');
+      break;
+    case 'Rent':
+      label.classList.add('label-rent');
+      break;
+    case 'Salary':
+      label.classList.add('label-salary');
+      break;
+    case 'Transport':
+      label.classList.add('label-transport');
+      break;
+    default:
+      label.classList.add('label-default');
+      break;
+  }
+
+  categoryCell.appendChild(label);
 
     const restoreBtn = row.querySelector('.restore-btn')
     restoreBtn.addEventListener('click', () => {
@@ -169,10 +225,12 @@ function renderDeletedTransactions() {
       calcExpense();
     });
     tbody.append(row);
+    
+
+    
   });
 
 }
-
 
 // Load More button logic
 document.getElementById('load-more-btn').addEventListener('click', () => {

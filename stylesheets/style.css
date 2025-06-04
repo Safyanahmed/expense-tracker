@@ -1,5 +1,5 @@
 html {
-  overflow-y: scroll;
+  overflow-y: hidden;
 }
 
 /* Reset and Base Styles */
@@ -46,7 +46,6 @@ body {
   flex-grow: 1;
 }
 
-
 .sidebar button, #load-more-btn {
   background-color: #374151;
   color: #fff;
@@ -74,12 +73,12 @@ body {
   flex-grow: 1;
   overflow-y: scroll;
   padding: 30px;
-  background-color: #ffffff;
+  background-color: #f6f4f4;
 }
 
 /* Summary */
 #summary {
-  background-color: #e5e7eb;
+  background-color: #dddee1;
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 20px;
@@ -135,35 +134,62 @@ body {
 
 /* Form Section */
 #transaction-form {
-  margin-bottom: 30px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  max-width: 850px;
+  margin: 0 auto 30px auto;
 }
 
 #transaction-form h3 {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  text-align: center;
+  color: #374151;
+}
+
+#form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 #form input,
-#form select,
-#form button {
-  display: block;
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 8px;
+#form select {
+  padding: 12px 15px;
   font-size: 1rem;
-  border-radius: 5px;
   border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+#form input:focus,
+#form select:focus {
+  border-color: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+  outline: none;
 }
 
 #form button {
   background-color: #10b981;
   color: white;
+  padding: 12px;
+  font-size: 1rem;
   border: none;
+  border-radius: 8px;
   cursor: pointer;
+  transition: background-color 0.3s, transform 0.1s;
 }
 
 #form button:hover {
   background-color: #059669;
 }
+
+#form button:active {
+  transform: scale(0.98);
+}
+
 
 /* Transactions Table */
 .title-container {
@@ -187,7 +213,7 @@ body {
 }
 
 #transaction-table thead tr {
-  background-color: #f3f4f6;
+  background-color: #e1e1e1;
   color: #374151;
 }
 
@@ -219,8 +245,6 @@ body {
   color: #374151;
 }
 
-
-/* Optional: Add rounded corners on the first and last cells */
 #transaction-table tbody tr td:first-child {
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
@@ -252,7 +276,6 @@ body {
   background-color: #dc2626;
 }
 
-
 .restore-btn {
   background-color: #374151;
   color: #fff;
@@ -266,6 +289,51 @@ body {
 .restore-btn:hover{
   background-color: #4b5563;
 }
+
+/* Base label styling */
+.label {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 9999px; /* fully rounded */
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-transform: capitalize;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Individual category colors */
+.label-food {
+  background-color: #ffedd5; /* light orange background */
+  color: #c2410c; /* darker orange text */
+}
+
+.label-rent {
+  background-color: #ede9fe; /* light indigo background */
+  color: #6b21a8; /* darker indigo text */
+}
+
+.label-salary {
+  background-color: #dcfce7; /* light green background */
+  color: #15803d; /* darker green text */
+}
+
+.label-transport {
+  background-color: #dbeafe; /* light blue background */
+  color: #1e40af; /* darker blue text */
+}
+
+.label-default {
+  background-color: #f3f4f6; /* light grey background */
+  color: #4b5563;           /* darker grey text */
+}
+
+/* Hover effect (optional) */
+.label:hover {
+  opacity: 0.85;
+}
+
+
 
 /*Delete all confirm modal*/
 /* Modal background */
@@ -365,7 +433,6 @@ body {
   }
 }
 
-
 /*responsive card summary*/
 @media (max-width: 600px) {
   .card-container {
@@ -376,7 +443,6 @@ body {
     flex-basis: 100%;
   }
 }
-
 
 /* change table layout to card layout for mobile */
 @media (max-width: 600px) {
