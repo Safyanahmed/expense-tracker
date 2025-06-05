@@ -150,6 +150,11 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
+  transition: margin-bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.transaction-title-container.collapsed {
+  margin-bottom: 0;
 }
 
 #toggle-form-btn {

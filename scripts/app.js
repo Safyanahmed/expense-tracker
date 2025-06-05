@@ -373,6 +373,7 @@ confirmBinDeleteBtn.addEventListener('click', () => {
 document.addEventListener('DOMContentLoaded', function() {
   const toggleBtn = document.getElementById('toggle-form-btn');
   const formCollapse = document.querySelector('.form-collapse');
+  const titleContainer = document.querySelector('.transaction-title-container');
   
   // Track the current state
   let isOpen = true; // Form starts open
@@ -381,11 +382,13 @@ document.addEventListener('DOMContentLoaded', function() {
       if (isOpen) {
           // Close the form
           formCollapse.classList.add('collapsed');
+          titleContainer.classList.add('collapsed');
           toggleBtn.textContent = 'Add Transcaction';
           isOpen = false;
       } else {
           // Open the form
           formCollapse.classList.remove('collapsed');
+          titleContainer.classList.remove('collapsed');
           toggleBtn.textContent = 'collapse';
           isOpen = true;
       }
