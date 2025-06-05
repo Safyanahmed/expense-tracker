@@ -52,25 +52,32 @@
 
       <!-- Transaction Form -->
       <section id="transaction-form">
-        <h3>Add Transaction</h3>
-        <form id="form">
-          <input type="text" id="description" placeholder="Description" required />
-          <input type="number" id="amount" step="0.01" placeholder="Amount" required />
-          <select id="expense-category" required>
-            <option value="Income">Income</option>
-            <option value="Expense">Expense</option>
-            <input list="categories" id="type-category" name="type-category" placeholder="Choose or add a transaction type"/>
+        <div class="transaction-title-container">
+          <h3>Add Transaction</h3>
+          <button id="toggle-form-btn">Collapse</button>
+        </div>
+        <div id="form-collapse" class="form-collapse">
+          <form id="form">
+            <input type="text" id="description" placeholder="Description" required />
+            <input type="number" id="amount" step="0.01" placeholder="Amount" required />
+            
+            <select id="expense-category" required>
+              <option value="Income">Income</option>
+              <option value="Expense">Expense</option>
+            </select>
+
+            <input list="categories" id="type-category" name="type-category" placeholder="Choose or add a transaction type" />
             <datalist id="categories">
               <option value="Food">
               <option value="Rent">
-              <option value="Salary">Salary</option>
+              <option value="Salary">
               <option value="Transport">
             </datalist>
-          </select>
-          <input type="date" id="date" required />
-      
-          <button type="submit">Add</button>
-        </form>
+
+            <input type="date" id="date" required />
+            <button type="submit">Add transaction</button>
+          </form>
+        </div>
       </section>
 
       <!-- Transactions List -->
