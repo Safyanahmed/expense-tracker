@@ -11,6 +11,28 @@ calcBalance();
 calcIncome();
 calcExpense();
 
+// limit type catagory to 15 characters 
+const typeInput = document.getElementById('type-category');
+const typeHelp = document.getElementById('type-help');
+
+typeInput.addEventListener('input', () => {
+  let value = typeInput.value;
+
+  const maxLength = 15;
+  if (value.length > maxLength) {
+    value = value.substring(0, maxLength);
+    typeHelp.classList.remove('hidden');
+    typeHelp.textContent = 'Character limited reached.';
+    typeInput.classList.add('max-reached');
+  } else {
+    typeHelp.classList.add('hidden');
+    typeInput.classList.remove('max-reached');
+  }
+
+  typeInput.value = value;
+});
+
+
 // Save to localStorage
 function saveTransactionsToLocalStorage() {
   localStorage.setItem('transactions', JSON.stringify(transactions));
@@ -54,6 +76,9 @@ document.getElementById('form').addEventListener('submit', function (e) {
   calcIncome();
   calcExpense();
   e.target.reset();
+  typeHelp.classList.add('hidden');
+  typeInput.classList.remove('max-reached');
+
 });
 
 
@@ -368,6 +393,10 @@ confirmBinDeleteBtn.addEventListener('click', () => {
   modalBin.classList.add('hidden');
 });
 
+cancelBinBtn.addEventListener('click', () => {
+  modalBin.classList.add('hidden');
+})
+
 
 // collapse form
 document.addEventListener('DOMContentLoaded', function() {
@@ -383,13 +412,13 @@ document.addEventListener('DOMContentLoaded', function() {
           // Close the form
           formCollapse.classList.add('collapsed');
           titleContainer.classList.add('collapsed');
-          toggleBtn.textContent = 'Add Transcaction';
+          toggleBtn.textContent = 'Add transcaction';
           isOpen = false;
       } else {
           // Open the form
           formCollapse.classList.remove('collapsed');
           titleContainer.classList.remove('collapsed');
-          toggleBtn.textContent = 'collapse';
+          toggleBtn.textContent = 'Collapse';
           isOpen = true;
       }
   });
