@@ -22,7 +22,7 @@ typeInput.addEventListener('input', () => {
   if (value.length > maxLength) {
     value = value.substring(0, maxLength);
     typeHelp.classList.remove('hidden');
-    typeHelp.textContent = 'Character limited reached.';
+    typeHelp.textContent = 'Character limit reached.';
     typeInput.classList.add('max-reached');
   } else {
     typeHelp.classList.add('hidden');
@@ -133,14 +133,18 @@ function renderTransaction() {
       <td data-label="Actions"><button class="delete-btn">Delete</button></td>
     `;
 
-    // Add category label with colors
     const categoryCell = row.querySelector('td:nth-child(5)');
-    const label = document.createElement('span');
-    label.classList.add('label');
-    label.textContent = t.typeCategory;
+    const label = document.createElement('span'); 
 
-    // Apply colour classes based on category
-    switch (t.typeCategory) {
+    // Clear existing labels (if any)
+    categoryCell.innerHTML = '';
+
+    let formattedCategory = (t.typeCategory || '').trim().toLowerCase();
+    formattedCategory = formattedCategory.charAt(0).toUpperCase() + formattedCategory.slice(1);
+
+    label.classList.add('label');
+
+    switch (formattedCategory) {
       case 'Food':
         label.classList.add('label-food');
         break;
@@ -158,7 +162,8 @@ function renderTransaction() {
         break;
     }
 
-    categoryCell.appendChild(label);
+    label.textContent = formattedCategory;
+    categoryCell.appendChild(label); 
 
     row.querySelector('.delete-btn').addEventListener('click', () => {
       t.deleted = true;
@@ -168,7 +173,6 @@ function renderTransaction() {
       calcExpense();
       renderTransaction();
     });
-    
     
     tbody.append(row);
     
@@ -215,30 +219,37 @@ function renderDeletedTransactions() {
 
     // Add category label with colors
   const categoryCell = row.querySelector('td:nth-child(5)');
-  const label = document.createElement('span');
-  label.classList.add('label');
-  label.textContent = transaction.typeCategory;
+    const label = document.createElement('span'); 
 
-  // Apply colour classes based on category
-  switch (transaction.typeCategory) {
-    case 'Food':
-      label.classList.add('label-food');
-      break;
-    case 'Rent':
-      label.classList.add('label-rent');
-      break;
-    case 'Salary':
-      label.classList.add('label-salary');
-      break;
-    case 'Transport':
-      label.classList.add('label-transport');
-      break;
-    default:
-      label.classList.add('label-default');
-      break;
-  }
+    // Clear existing labels (if any)
+    categoryCell.innerHTML = '';
 
-  categoryCell.appendChild(label);
+    let formattedCategory = (transaction.typeCategory || '').trim().toLowerCase();
+    formattedCategory = formattedCategory.charAt(0).toUpperCase() + formattedCategory.slice(1);
+
+    label.classList.add('label');
+
+    switch (formattedCategory) {
+      case 'Food':
+        label.classList.add('label-food');
+        break;
+      case 'Rent':
+        label.classList.add('label-rent');
+        break;
+      case 'Salary':
+        label.classList.add('label-salary');
+        break;
+      case 'Transport':
+        label.classList.add('label-transport');
+        break;
+      default:
+        label.classList.add('label-default');
+        break;
+    }
+
+    label.textContent = formattedCategory;
+    categoryCell.appendChild(label); 
+
 
     const restoreBtn = row.querySelector('.restore-btn')
     restoreBtn.addEventListener('click', () => {
@@ -249,9 +260,8 @@ function renderDeletedTransactions() {
       calcIncome();
       calcExpense();
     });
-    tbody.append(row);
     
-
+    tbody.append(row);
     
   });
 
