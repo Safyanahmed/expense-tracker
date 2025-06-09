@@ -1,5 +1,6 @@
 let transactions = [];
 let currentFilter = 'all';
+let currentView = 'transactions';
 let visibleCount = 0;
 let itemsPerPage = 10;
 
@@ -22,7 +23,7 @@ typeInput.addEventListener('input', () => {
   if (value.length > maxLength) {
     value = value.substring(0, maxLength);
     typeHelp.classList.remove('hidden');
-    typeHelp.textContent = 'Character limit reached.';
+    typeHelp.textContent = 'Character limit of 15 reached.';
     typeInput.classList.add('max-reached');
   } else {
     typeHelp.classList.add('hidden');
@@ -167,6 +168,8 @@ function renderTransaction() {
 
     row.querySelector('.delete-btn').addEventListener('click', () => {
       t.deleted = true;
+      t.deletedAt = new Date().toISOString();
+      visibleCount = 0;
       saveTransactionsToLocalStorage();
       calcBalance();
       calcIncome();
@@ -178,12 +181,13 @@ function renderTransaction() {
     
   });
   
-
   // Show/hide Load More button
   visibleCount += itemsPerPage;
   const loadMoreBtn = document.getElementById('load-more-btn');
   loadMoreBtn.style.display = visibleCount >= filtered.length ? 'none' : 'block';
 }
+
+
 
 // render deleted transactions
 function renderDeletedTransactions() {
@@ -193,9 +197,19 @@ function renderDeletedTransactions() {
 
   transListTitle.textContent = 'Binned Transactions';
 
-  const deletedTransactions = transactions.filter(t => t.deleted);
+  // filter by deleted and sort by date deleted at, if these are the same - then sort by date they were created
+  const deletedTransactions = transactions
+  .filter(t => t.deleted)
+  .sort((a, b) => {
+    const dateA = new Date(b.deletedAt) - new Date(a.deletedAt);
+    if (dateA !== 0) return dateA;
+    return new Date(b.date) - new Date(a.date); // fallback sort by transaction date
+  });
 
-  if(deletedTransactions.length === 0) {
+  const deletedvisible = deletedTransactions.slice(0, visibleCount + itemsPerPage);
+
+  // no deleted transactions message
+  if(deletedvisible.length === 0) {
     const row = document.createElement('tr');
     const cell = document.createElement('td');
     cell.colSpan = 6;
@@ -203,10 +217,11 @@ function renderDeletedTransactions() {
     cell.style.textAlign = 'center';
     row.append(cell);
     tbody.append(row);
+    document.getElementById('load-more-btn').style.display = 'none';
     return;
   };
 
-  deletedTransactions.forEach(transaction => {
+  deletedvisible.forEach(transaction => {
     const row = document.createElement('tr');
     row.innerHTML= `
     <td data-label="Date">${transaction.date}</td>
@@ -218,7 +233,7 @@ function renderDeletedTransactions() {
     `;
 
     // Add category label with colors
-  const categoryCell = row.querySelector('td:nth-child(5)');
+    const categoryCell = row.querySelector('td:nth-child(5)');
     const label = document.createElement('span'); 
 
     // Clear existing labels (if any)
@@ -254,6 +269,8 @@ function renderDeletedTransactions() {
     const restoreBtn = row.querySelector('.restore-btn')
     restoreBtn.addEventListener('click', () => {
       transaction.deleted = false;
+      delete transaction.deletedAt;
+      visibleCount = 0;
       saveTransactionsToLocalStorage();
       renderDeletedTransactions();
       calcBalance();
@@ -264,17 +281,30 @@ function renderDeletedTransactions() {
     tbody.append(row);
     
   });
+  // Show/hide Load More button
+  visibleCount += itemsPerPage;
+  const loadMoreBtn = document.getElementById('load-more-btn');
+  loadMoreBtn.style.display = visibleCount >= deletedTransactions.length ? 'none' : 'block';
 
 }
 
 // Load More button logic
-document.getElementById('load-more-btn').addEventListener('click', () => {
-  renderTransaction();
-});
+const loadMoreBtn = document.getElementById('load-more-btn');
+
+loadMoreBtn.addEventListener('click', () => {
+  if (currentView === 'transactions') {
+    renderTransaction();
+    console.log('im doing render transactions');
+  } else if (currentView === 'bin') {
+    renderDeletedTransactions();
+    console.log('im doing render deleted transactions');
+  }
+})
 
 // Filter buttons logic
 document.getElementById('all-transactions-btn').addEventListener('click', () => {
   currentFilter = 'all';
+  currentView = 'transactions';
   visibleCount = 0;
   renderTransaction();
   emptyBinBtn.classList.add('hidden');
@@ -282,6 +312,7 @@ document.getElementById('all-transactions-btn').addEventListener('click', () => 
 
 document.getElementById('income-btn').addEventListener('click', () => {
   currentFilter = 'income';
+  currentView = 'transactions';
   visibleCount = 0;
   renderTransaction();
   emptyBinBtn.classList.add('hidden');
@@ -289,12 +320,16 @@ document.getElementById('income-btn').addEventListener('click', () => {
 
 document.getElementById('expenses-btn').addEventListener('click', () => {
   currentFilter = 'expense';
+  currentView = 'transactions';
   visibleCount = 0;
   renderTransaction();
   emptyBinBtn.classList.add('hidden');
 });
 
 document.getElementById('bin-btn').addEventListener('click', () => {
+  currentView = 'bin';
+  console.log('i am now the bin')
+  visibleCount = 0;
   renderDeletedTransactions();
   emptyBinBtn.classList.remove('hidden');
 });
