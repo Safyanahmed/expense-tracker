@@ -308,6 +308,8 @@ document.getElementById('all-transactions-btn').addEventListener('click', () => 
   visibleCount = 0;
   renderTransaction();
   emptyBinBtn.classList.add('hidden');
+  const isOpen = sidebar.classList.toggle('open');
+  toggleBtn.setAttribute('aria-expanded', isOpen);
 });
 
 document.getElementById('income-btn').addEventListener('click', () => {
@@ -316,6 +318,8 @@ document.getElementById('income-btn').addEventListener('click', () => {
   visibleCount = 0;
   renderTransaction();
   emptyBinBtn.classList.add('hidden');
+  const isOpen = sidebar.classList.toggle('open');
+  toggleBtn.setAttribute('aria-expanded', isOpen);
 });
 
 document.getElementById('expenses-btn').addEventListener('click', () => {
@@ -324,6 +328,8 @@ document.getElementById('expenses-btn').addEventListener('click', () => {
   visibleCount = 0;
   renderTransaction();
   emptyBinBtn.classList.add('hidden');
+  const isOpen = sidebar.classList.toggle('open');
+  toggleBtn.setAttribute('aria-expanded', isOpen);
 });
 
 document.getElementById('bin-btn').addEventListener('click', () => {
@@ -332,6 +338,8 @@ document.getElementById('bin-btn').addEventListener('click', () => {
   visibleCount = 0;
   renderDeletedTransactions();
   emptyBinBtn.classList.remove('hidden');
+  const isOpen = sidebar.classList.toggle('open');
+  toggleBtn.setAttribute('aria-expanded', isOpen);
 });
 
 
@@ -470,9 +478,9 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // mobile sidebar collapsable menu
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.getElementById('sidebar');
 document.addEventListener('DOMContentLoaded', () => {
-  const sidebar = document.getElementById('sidebar');
-  const toggleBtn = document.getElementById('sidebar-toggle');
   toggleBtn.addEventListener('click', () => {
     const isOpen = sidebar.classList.toggle('open');
     toggleBtn.setAttribute('aria-expanded', isOpen);
