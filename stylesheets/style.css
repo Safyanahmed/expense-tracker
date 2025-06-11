@@ -23,6 +23,7 @@ body {
   overflow: hidden;
 }
 
+/* sidebar */
 .sidebar {
   background-color: #1f2937;
   color: #fff;
@@ -46,7 +47,7 @@ body {
   flex-grow: 1;
 }
 
-.sidebar button, #load-more-btn {
+.sidebar button {
   background-color: #374151;
   color: #fff;
   border: none;
@@ -61,6 +62,17 @@ body {
   background-color: #4b5563;
 }
 
+#load-more-btn {
+  background-color: #374151;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.2s ease;
+}
+
 .sidebar footer {
   font-size: 0.8rem;
   text-align: center;
@@ -72,7 +84,7 @@ body {
 .main-content {
   flex-grow: 1;
   overflow-y: scroll;
-  padding: 30px;
+  padding: 30px 60px;
   background-color: #f6f4f4;
 }
 
@@ -131,6 +143,8 @@ body {
   font-size: 1.5rem;
   font-weight: bold;
 }
+
+
 
 /* Form Section */
 /* Animate show/hide form */
@@ -262,7 +276,9 @@ body {
   border-spacing: 0 8px; /* space between rows for modern look */
   margin-bottom: 20px;
   font-family: Arial, sans-serif;
-  
+  table-layout: fixed;
+  width: 100%;
+  max-width: 1200px;
 }
 
 #transaction-table thead tr {
@@ -306,6 +322,18 @@ body {
 #transaction-table tbody tr td:last-child {
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
+}
+
+#transaction-table th:nth-child(2),
+#transaction-table td:nth-child(2) {
+  width: 250px;
+}
+
+#transaction-table th,
+#transaction-table td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 #delete-all-btn, #empty-bin-btn {
@@ -474,7 +502,7 @@ body {
 
   .sidebar {
     width: 100%;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
   }
@@ -512,6 +540,10 @@ body {
     width: 100%;
   }
 
+  #transaction-form h3 {
+    font-size: 1.3rem;
+  }
+
   #transaction-table thead {
     display: none; /* Hide table header on mobile */
   }
@@ -534,6 +566,10 @@ body {
     border-bottom: 1px solid #eee;
   }
 
+  #transaction-table td:nth-child(2) {
+    width: 100% !important;
+  }
+
   #transaction-table td:last-child {
     border-bottom: none;
   }
@@ -546,3 +582,49 @@ body {
   }
 }
 
+/*mobile expandable sidebar*/
+/* On desktop, sidebar is always visible */
+@media (min-width: 768px) {
+  #sidebar-toggle {
+    display: none; /* hide toggle button */
+  }
+  .sidebar {
+    max-height: none; /* fully visible */
+  }
+}
+
+/* On mobile, hide sidebar by default, max-height 0 (collapsed) */
+@media (max-width: 767px) {
+  .sidebar h1 {
+    margin-bottom: 0px;
+  }
+
+  #filters {
+    width: 100%;
+    max-width: 90%;
+  }
+
+  .sidebar {
+    width: 100%; /* full width on mobile */
+    max-height: 13vh; /* collapsed */
+    transition: max-height 0.5s ease;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.3);
+  }
+
+  .sidebar.open {
+    max-height: 100vh; /* expanded */
+  }
+
+  #sidebar-toggle {
+    margin-bottom: 0px;
+  }
+
+  .sidebar-title-container{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+}

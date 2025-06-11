@@ -197,7 +197,7 @@ function renderDeletedTransactions() {
 
   transListTitle.textContent = 'Binned Transactions';
 
-  // filter by deleted and sort by date deleted at, if these are the same - then sort by date they were created
+  // filter by deleted and sort by time deleted at, if these are the same - then sort by date they were created
   const deletedTransactions = transactions
   .filter(t => t.deleted)
   .sort((a, b) => {
@@ -468,5 +468,17 @@ document.addEventListener('DOMContentLoaded', function() {
       }
   });
 });
+
+// mobile sidebar collapsable menu
+document.addEventListener('DOMContentLoaded', () => {
+  const sidebar = document.getElementById('sidebar');
+  const toggleBtn = document.getElementById('sidebar-toggle');
+  toggleBtn.addEventListener('click', () => {
+    const isOpen = sidebar.classList.toggle('open');
+    toggleBtn.setAttribute('aria-expanded', isOpen);
+  });
+});
+
+
 
 

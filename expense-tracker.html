@@ -10,9 +10,10 @@
 
   <div class="app-container">
     <!-- Sidebar -->
-    <aside class="sidebar">
-      <header>
+    <aside id="sidebar" class="sidebar">
+      <header class="sidebar-title-container">
         <h1>Expense Tracker</h1>
+        <button id="sidebar-toggle" aria-expanded="false" aria-label="Toggle Filters">☰ Menu</button>
       </header>
 
       <!-- Filters -->
@@ -21,8 +22,8 @@
         <button id="income-btn">Income</button>
         <button id="expenses-btn">Expenses</button>
         <button id="bin-btn">Bin</button>
-        
       </section>
+      
       <button id="delete-all-btn">Delete all transactions</button>
 
       <footer>
