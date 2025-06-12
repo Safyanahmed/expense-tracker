@@ -310,6 +310,8 @@ document.getElementById('all-transactions-btn').addEventListener('click', () => 
   emptyBinBtn.classList.add('hidden');
   const isOpen = sidebar.classList.toggle('open');
   toggleBtn.setAttribute('aria-expanded', isOpen);
+  document.querySelector('.title-container').scrollIntoView({ behavior: 'smooth' });
+
 });
 
 document.getElementById('income-btn').addEventListener('click', () => {
@@ -320,6 +322,7 @@ document.getElementById('income-btn').addEventListener('click', () => {
   emptyBinBtn.classList.add('hidden');
   const isOpen = sidebar.classList.toggle('open');
   toggleBtn.setAttribute('aria-expanded', isOpen);
+  document.querySelector('.title-container').scrollIntoView({ behavior: 'smooth' });
 });
 
 document.getElementById('expenses-btn').addEventListener('click', () => {
@@ -330,6 +333,7 @@ document.getElementById('expenses-btn').addEventListener('click', () => {
   emptyBinBtn.classList.add('hidden');
   const isOpen = sidebar.classList.toggle('open');
   toggleBtn.setAttribute('aria-expanded', isOpen);
+  document.querySelector('.title-container').scrollIntoView({ behavior: 'smooth' });
 });
 
 document.getElementById('bin-btn').addEventListener('click', () => {
@@ -340,6 +344,7 @@ document.getElementById('bin-btn').addEventListener('click', () => {
   emptyBinBtn.classList.remove('hidden');
   const isOpen = sidebar.classList.toggle('open');
   toggleBtn.setAttribute('aria-expanded', isOpen);
+  document.querySelector('.title-container').scrollIntoView({ behavior: 'smooth' });
 });
 
 
@@ -405,6 +410,8 @@ const cancelBtn = document.getElementById('cancel-delete');
 
 deleteAllBtn.addEventListener('click', () => {
   modal.classList.remove('hidden');
+  const isOpen = sidebar.classList.toggle('open');
+  toggleBtn.setAttribute('aria-expanded', isOpen);
 })
 
 confirmBtn.addEventListener('click', () => {
@@ -480,6 +487,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // mobile sidebar collapsable menu
 const toggleBtn = document.getElementById('sidebar-toggle');
 const sidebar = document.getElementById('sidebar');
+
 document.addEventListener('DOMContentLoaded', () => {
   toggleBtn.addEventListener('click', () => {
     const isOpen = sidebar.classList.toggle('open');
@@ -487,6 +495,27 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+
+
+const filterButtons = document.querySelectorAll('#filters button');
+
+filterButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    // Remove active from all
+    filterButtons.forEach(btn => btn.classList.remove('active'));
+    
+    // Add active to the clicked one
+    button.classList.add('active');
+    
+    // Optional: set currentFilter or trigger rendering here
+    // currentFilter = button.id;
+  });
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+  const allBtn = document.getElementById('all-transactions-btn');
+  allBtn.classList.add('active');
+});
 
 
 

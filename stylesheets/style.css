@@ -62,6 +62,14 @@ body {
   background-color: #4b5563;
 }
 
+.sidebar button.active {
+  background-color: #2563eb; /* Blue for active */
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.5); /* subtle glow */
+}
+
+
 #load-more-btn {
   background-color: #374151;
   color: #fff;
@@ -606,7 +614,7 @@ body {
 
   .sidebar {
     width: 100%; /* full width on mobile */
-    max-height: 13vh; /* collapsed */
+    max-height: 80px; /* collapsed */
     transition: max-height 0.5s ease;
     box-shadow: 2px 0 5px rgba(0,0,0,0.3);
   }
@@ -627,4 +635,24 @@ body {
     align-items: center;
     margin-bottom: 30px;
   }
+}
+
+@media (max-width: 767px) {
+  .modal-content {
+  padding: 1rem;
+  width: 90%;
+  height: auto;
+  max-height: none;
+  
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  position: relative;
+  text-align: left;
+}
+
+.modal-content p {
+  margin: 0 0 1.5rem;
+  font-size: 1rem;
+  color: #333;
+}
 }
