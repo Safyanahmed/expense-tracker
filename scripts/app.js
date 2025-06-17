@@ -180,6 +180,7 @@ function renderTransaction() {
       calcIncome();
       calcExpense();
       renderTransaction();
+      showToast('Transaction deleted', 'delete');
     });
     
     tbody.append(row);
@@ -281,6 +282,7 @@ function renderDeletedTransactions() {
       calcBalance();
       calcIncome();
       calcExpense();
+      showToast('Transaction restored', 'restore');
     });
     
     tbody.append(row);
@@ -523,4 +525,47 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 
+let toastTimeout;
+let deleteCount = 0;
+let restoreCount = 0;
+let isDeleting = false;
+let isRestoring = false;
 
+function showToast(message, type = 'delete') {
+  const toast = document.getElementById('toast');
+
+  // Reset if switching type
+  if ((type === 'delete' && isRestoring) || (type === 'restore' && isDeleting)) {
+    deleteCount = 0;
+    restoreCount = 0;
+  }
+
+  // Track type
+  isDeleting = type === 'delete';
+  isRestoring = type === 'restore';
+
+  // Increment count
+  if (type === 'delete') deleteCount++;
+  else restoreCount++;
+
+  // Set message
+  const count = type === 'delete' ? deleteCount : restoreCount;
+  toast.textContent = count > 1
+    ? `${count} transactions ${type}d`
+    : `Transaction ${type}d`;
+
+  // Show toast
+  toast.classList.remove('hidden');
+  toast.classList.add('show');
+
+  // Reset timer
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => {
+    toast.classList.remove('show');
+    toast.classList.add('hidden');
+    deleteCount = 0;
+    restoreCount = 0;
+    isDeleting = false;
+    isRestoring = false;
+  }, 2000);
+}

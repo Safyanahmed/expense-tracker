@@ -502,6 +502,37 @@ body {
   background-color: #c0392b;
 }
 
+/* Toast delete/restore message */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1f2937; /* dark grey */
+  color: #fff;
+  padding: 1em 1.5em;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  font-size: 0.95rem;
+  font-weight: 500;
+  z-index: 10000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* When visible */
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+/* Hidden state */
+.toast.hidden {
+  display: none;
+}
+
 /* Responsive Layout */
 @media (max-width: 768px) {
   .app-container {
