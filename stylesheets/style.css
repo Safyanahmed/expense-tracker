@@ -327,6 +327,16 @@ body {
   cursor: default;
 }
 
+#transaction-table thead th:first-child {
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+
+#transaction-table thead th:last-child {
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
 #transaction-table tbody tr td:first-child {
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
@@ -691,14 +701,3 @@ body {
   color: #333;
 }
 }
-
-
- #transaction-table thead th:first-child {
-            border-top-left-radius: 12px;
-            border-bottom-left-radius: 12px; /* Round the top-left corner */
-        }
-
-        #transaction-table thead th:last-child {
-            border-top-right-radius: 12px;
-            border-bottom-right-radius: 12px; /* Round the top-right corner */
-        }
