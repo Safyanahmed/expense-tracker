@@ -82,7 +82,12 @@ document.getElementById('form').addEventListener('submit', function (e) {
 
 });
 
-
+// change date format to en-GB
+function formatDate(dateStr) {
+  const options = { day: '2-digit', month: 'short', year: 'numeric' };
+  const dateObj = new Date(dateStr);
+  return dateObj.toLocaleDateString('en-GB', options);
+}
 
 
 function renderTransaction() {
@@ -126,7 +131,7 @@ function renderTransaction() {
   visible.forEach(t => {
     const row = document.createElement('tr');
     row.innerHTML = `
-      <td data-label="Date">${t.date}</td>
+      <td data-label="Date">${formatDate(t.date)}</td>
       <td data-label="Description">${t.description}</td>
       <td data-label="Income/Expense">${t.expenseCategory}</td>
       <td data-label="Amount">${t.expenseCategory === 'Expense' ? '-' : ''}£${t.amount.toFixed(2)}</td>
@@ -224,7 +229,7 @@ function renderDeletedTransactions() {
   deletedvisible.forEach(transaction => {
     const row = document.createElement('tr');
     row.innerHTML= `
-    <td data-label="Date">${transaction.date}</td>
+    <td data-label="Date">${formatDate(transaction.date)}</td>
     <td data-label="Description">${transaction.description}</td>
     <td data-label="Income/Expense">${transaction.expenseCategory}</td>
     <td data-label="Amount">${transaction.expenseCategory === 'Expense' ? '-' : ''}£${transaction.amount.toFixed(2)}</td>
