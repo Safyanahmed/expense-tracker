@@ -236,6 +236,12 @@ body {
   box-shadow: 0 0 0 3px rgba(225, 67, 15, 0.2);
 }
 
+/*helper warning focus input red*/
+#description.max-reached:focus {
+  border-color: #e1430f;
+  box-shadow: 0 0 0 3px rgba(225, 67, 15, 0.2);
+}
+
 
 #form button {
   background-color: #10b981;
@@ -263,8 +269,6 @@ body {
   margin-top: 5px;
   margin-bottom: 0;
 }
-
-
 
 /* Transactions Table */
 .title-container {
@@ -687,3 +691,14 @@ body {
   color: #333;
 }
 }
+
+
+ #transaction-table thead th:first-child {
+            border-top-left-radius: 12px;
+            border-bottom-left-radius: 12px; /* Round the top-left corner */
+        }
+
+        #transaction-table thead th:last-child {
+            border-top-right-radius: 12px;
+            border-bottom-right-radius: 12px; /* Round the top-right corner */
+        }

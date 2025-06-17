@@ -33,6 +33,28 @@ typeInput.addEventListener('input', () => {
   typeInput.value = value;
 });
 
+// limit description to 15 characters 
+const descriptionInput = document.getElementById('description');
+const descriptionHelp = document.getElementById('description-help');
+
+
+descriptionInput.addEventListener('input', () => {
+  let value = descriptionInput.value;
+
+  const maxLength = 25;
+  if (value.length > maxLength) {
+    value = value.substring(0, maxLength);
+    descriptionHelp.classList.remove('hidden');
+    descriptionHelp.textContent = 'Character limit of 25 reached.';
+    descriptionInput.classList.add('max-reached');
+  } else {
+    descriptionHelp.classList.add('hidden');
+    descriptionInput.classList.remove('max-reached');
+  }
+
+  descriptionInput.value = value;
+});
+
 
 // Save to localStorage
 function saveTransactionsToLocalStorage() {
