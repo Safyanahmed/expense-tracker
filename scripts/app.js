@@ -202,7 +202,7 @@ function renderTransaction() {
       calcBalance();
       calcIncome();
       calcExpense();
-      renderTransaction();
+      row.remove();
       showToast('Transaction deleted', 'delete');
     });
     
@@ -302,7 +302,7 @@ function renderDeletedTransactions() {
       delete transaction.deletedAt;
       visibleCount = 0;
       saveTransactionsToLocalStorage();
-      renderDeletedTransactions();
+      row.remove();
       calcBalance();
       calcIncome();
       calcExpense();
