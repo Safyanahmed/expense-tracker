@@ -131,7 +131,7 @@ function renderTransaction() {
   if (currentFilter === 'income') {
     transListTitle.textContent = 'Transaction Income';
   } else if (currentFilter === 'expense') {
-    transListTitle.textContent = 'Transaction Expense';
+    transListTitle.textContent = 'Transaction Expenses';
   } else {
     transListTitle.textContent = 'Transaction History';
   }
@@ -142,6 +142,7 @@ function renderTransaction() {
     const cell = document.createElement('td');
     cell.colSpan = 6;
     cell.textContent = 'No transactions';
+    cell.classList.add('empty-message-cell');
     cell.style.textAlign = 'center';
     row.append(cell);
     tbody.append(row);
@@ -154,7 +155,7 @@ function renderTransaction() {
     const row = document.createElement('tr');
     row.innerHTML = `
       <td data-label="Date">${formatDate(t.date)}</td>
-      <td data-label="Description">${t.description}</td>
+      <td data-label="Item Description">${t.description}</td>
       <td data-label="Income/Expense">${t.expenseCategory}</td>
       <td data-label="Amount">${t.expenseCategory === 'Expense' ? '-' : ''}£${t.amount.toFixed(2)}</td>
       <td data-label="Type"></td> 
@@ -242,6 +243,7 @@ function renderDeletedTransactions() {
     const cell = document.createElement('td');
     cell.colSpan = 6;
     cell.textContent = 'No deleted transactions';
+    cell.classList.add('empty-message-cell');
     cell.style.textAlign = 'center';
     row.append(cell);
     tbody.append(row);

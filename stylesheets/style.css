@@ -521,6 +521,8 @@ body {
   position: fixed;
   bottom: 20px;
   left: 50%;
+  width: 250px;
+  text-align: center;
   transform: translateX(-50%);
   background: #1f2937; /* dark grey */
   color: #fff;
@@ -617,6 +619,16 @@ body {
     padding: 8px 0;
     border: none;
     border-bottom: 1px solid #eee;
+  }
+
+  #transaction-table td.empty-message-cell {
+    display: flex;
+    justify-content: center;
+  }
+
+  #transaction-table td p {
+    display: flex;
+    justify-content: center;
   }
 
   #transaction-table td:nth-child(2) {
