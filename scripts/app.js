@@ -203,8 +203,25 @@ function renderTransaction() {
       calcIncome();
       calcExpense();
       row.remove();
+
+      // No transactions message upon delete
+      const remainingRows = tbody.querySelectorAll('tr:not(.toast-row)');
+    
+      if (remainingRows.length === 0) {
+        const emptyRow = document.createElement('tr');
+        const emptyCell = document.createElement('td');
+        emptyCell.colSpan = 6;
+        emptyCell.textContent = 'No transactions';
+        emptyCell.classList.add('empty-message-cell');
+        emptyCell.style.textAlign = 'center';
+        emptyRow.appendChild(emptyCell);
+        tbody.appendChild(emptyRow);
+
+        document.getElementById('load-more-btn').style.display = 'none';
+      }
+
       showToast('Transaction deleted', 'delete');
-    });
+      });
     
     tbody.append(row);
     
@@ -306,6 +323,23 @@ function renderDeletedTransactions() {
       calcBalance();
       calcIncome();
       calcExpense();
+
+      // No deleted transactions message upon delete
+      const remainingRows = tbody.querySelectorAll('tr:not(.toast-row)');
+    
+      if (remainingRows.length === 0) {
+        const emptyRow = document.createElement('tr');
+        const emptyCell = document.createElement('td');
+        emptyCell.colSpan = 6;
+        emptyCell.textContent = 'No deleted transactions';
+        emptyCell.classList.add('empty-message-cell');
+        emptyCell.style.textAlign = 'center';
+        emptyRow.appendChild(emptyCell);
+        tbody.appendChild(emptyRow);
+
+        document.getElementById('load-more-btn').style.display = 'none';
+      }
+
       showToast('Transaction restored', 'restore');
     });
     
