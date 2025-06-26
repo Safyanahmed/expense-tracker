@@ -2,6 +2,16 @@ html {
   overflow-y: hidden;
 }
 
+/* Safari and Firefox appearence reset*/
+input,
+select,
+button {
+  font-family: inherit;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
 /* Reset and Base Styles */
 * {
   margin: 0;
