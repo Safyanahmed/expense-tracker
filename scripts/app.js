@@ -534,17 +534,29 @@ document.addEventListener('DOMContentLoaded', function() {
   
   toggleBtn.addEventListener('click', function() {
       if (isOpen) {
-          // Close the form
+          // Open the form
           formCollapse.classList.add('collapsed');
           titleContainer.classList.add('collapsed');
-          toggleBtn.textContent = 'Add transcaction';
+          toggleBtn.textContent = 'Add transaction';
           isOpen = false;
+
+          // Switch to green
+          toggleBtn.classList.remove('btn-blue');
+          toggleBtn.classList.add('btn-green');
+
+
+          
       } else {
-          // Open the form
+          // Close the form
           formCollapse.classList.remove('collapsed');
           titleContainer.classList.remove('collapsed');
           toggleBtn.textContent = 'Collapse';
           isOpen = true;
+
+          // Switch to blue
+          toggleBtn.classList.remove('btn-green');
+          toggleBtn.classList.add('btn-blue');
+          
       }
   });
 });

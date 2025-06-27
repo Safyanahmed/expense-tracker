@@ -179,7 +179,7 @@ body {
 
 .transaction-title-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   margin-bottom: 10px;
   transition: margin-bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -190,16 +190,31 @@ body {
 }
 
 #toggle-form-btn {
-  background-color: #10b981;
   color: white;
   border: none;
   padding: 10px 12px;
   border-radius: 5px;
   cursor: pointer;
-  width: 130px;
+  width: 170px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease-in-out;
 }
 
-#toggle-form-btn:hover {
+/* Blue (Open / Collapse) State */
+.btn-blue {
+  background-color: #374151;
+}
+
+.btn-blue:hover {
+  background-color: #4b5563;
+}
+
+/* Green (Closed / Add Transaction) State */
+.btn-green {
+  background-color: #10b981;
+}
+
+.btn-green:hover {
   background-color: #059669;
 }
 
@@ -210,12 +225,6 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   max-width: 850px;
   margin: 0 auto 30px auto;
-}
-
-#transaction-form h3 {
-  font-size: 1.5rem;
-  text-align: center;
-  color: #374151;
 }
 
 #form {
@@ -603,10 +612,6 @@ body {
   #transaction-table tr {
     display: block;
     width: 100%;
-  }
-
-  #transaction-form h3 {
-    font-size: 1.3rem;
   }
 
   #transaction-table thead {
