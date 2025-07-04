@@ -12,7 +12,14 @@ calcBalance();
 calcIncome();
 calcExpense();
 
-// limit type catagory to 15 characters 
+// Sanitise input form to escape unsafe characters
+function sanitizeInput(str) {
+  const temp = document.createElement('div');
+  temp.textContent = str.trim(); // also removes leading/trailing spaces
+  return temp.innerHTML;
+}
+
+// Limit type catagory to 15 characters 
 const typeInput = document.getElementById('type-category');
 const typeHelp = document.getElementById('type-help');
 
@@ -33,7 +40,7 @@ typeInput.addEventListener('input', () => {
   typeInput.value = value;
 });
 
-// limit description to 15 characters 
+// Limit description to 15 characters 
 const descriptionInput = document.getElementById('description');
 const descriptionHelp = document.getElementById('description-help');
 
@@ -71,10 +78,10 @@ function loadTransactionsFromLocalStorage() {
 document.getElementById('form').addEventListener('submit', function (e) {
   e.preventDefault();
 
-  const description = document.getElementById('description').value;
+  const description = sanitizeInput(document.getElementById('description').value);
   const amount = parseFloat(document.getElementById('amount').value);
   const date = document.getElementById('date').value;
-  const typeCategory = document.getElementById('type-category').value;
+  const typeCategory = sanitizeInput(document.getElementById('type-category').value);
   const expenseCategory = document.getElementById('expense-category').value;
 
   if (amount <= 0 || isNaN(amount)) {
