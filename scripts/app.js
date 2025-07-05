@@ -193,6 +193,30 @@ function renderTransaction() {
       case 'Transport':
         label.classList.add('label-transport');
         break;
+      case 'Utilities': // New
+        label.classList.add('label-utilities');
+        break;
+      case 'Health': // New
+        label.classList.add('label-health');
+        break;
+      case 'Shopping': // New (covers both if they're the same category)
+        label.classList.add('label-shopping');
+        break;
+      case 'Entertainment': // New
+        label.classList.add('label-entertainment');
+        break;
+      case 'Pet': // New
+        label.classList.add('label-pet');
+        break;
+      case 'Education': // New
+        label.classList.add('label-education');
+        break;
+      case 'Travel': // New
+        label.classList.add('label-travel');
+        break;
+      case 'Family': // New
+        label.classList.add('label-family');
+        break;
       default:
         label.classList.add('label-default');
         break;

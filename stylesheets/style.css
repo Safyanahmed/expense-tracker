@@ -450,6 +450,46 @@ body {
   color: #1e40af; /* darker blue text */
 }
 
+.label-utilities {
+  background-color: #ffe4e6; /* Light Rose */
+  color: #be123c; /* Darker Rose */
+}
+
+.label-health {
+  background-color: #fefce8; /* Light Yellow */
+  color: #a16207; /* Darker Yellow/Brown */
+}
+
+.label-shopping { /* For the first 'Shopping' */
+  background-color: #fdf2f8; /* Light Pink */
+  color: #9d174d; /* Darker Pink/Maroon */
+}
+
+.label-entertainment {
+  background-color: #f0f9ff; /* Very Light Cyan/Azure */
+  color: #075985; /* Darker Cyan/Blue */
+}
+
+.label-pet {
+  background-color: #f3e8ff; /* Light Lavender/Periwinkle */
+  color: #7e22ce; /* Darker Purple */
+}
+
+.label-education {
+  background-color: #eef2ff; /* Very Light Violet */
+  color: #4338ca; /* Darker Violet/Blue */
+}
+
+.label-travel {
+  background-color: #e0f2f7; /* Light Teal */
+  color: #0d9488; /* Darker Teal */
+}
+
+.label-family {
+  background-color: #fff7ed; /* Creamy Orange/Peach */
+  color: #b45309; /* Darker Orange/Brown */
+}
+
 .label-default {
   background-color: #f3f4f6; /* light grey background */
   color: #4b5563;           /* darker grey text */
