@@ -642,6 +642,10 @@ body {
   .balance-card {
     flex-basis: 100%;
   }
+
+  .card p {
+  font-size: 1.3rem;
+  }
 }
 
 /* change table layout to card layout for mobile */
