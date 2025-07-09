@@ -38,6 +38,7 @@ body {
   background-color: #1f2937;
   color: #fff;
   width: 250px;
+  min-width: 250px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -304,7 +305,6 @@ body {
 }
 
 #transaction-table {
-  width: 100%;
   border-collapse: separate;
   border-spacing: 0 8px; /* space between rows for modern look */
   margin-bottom: 20px;
